@@ -1,23 +1,30 @@
 import com.academy.models.Course;
 import com.academy.models.Lecture;
 import com.academy.services.LectureService;
+import com.academy.services.MainService;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Course firstCourse = new Course("JAVA", 1l);
+        Course firstCourse = new Course("JAVA", 2022L);
 
         LectureService lectureService = new LectureService();
 
-        Lecture firstLecture = lectureService.createLecture("Intro", 1l, firstCourse.getID());
-        Lecture secondLecture = lectureService.createLecture("Variables", 2l, firstCourse.getID());
-        Lecture thirdLecture = lectureService.createLecture("Data_types", 3l, firstCourse.getID());
-        Lecture fourthLecture = lectureService.createLecture("Git", 4l, firstCourse.getID());
-        Lecture fifthLecture = lectureService.createLecture("Github", 5l, firstCourse.getID());
-        Lecture sixthLecture = lectureService.createLecture("Methods", 6l, firstCourse.getID());
+        Lecture firstLecture = lectureService.createLecture("Intro", 1L, firstCourse.getCourseID());
+        Lecture secondLecture = lectureService.createLecture("Variables", 2L, firstCourse.getCourseID());
+        Lecture thirdLecture = lectureService.createLecture("Data_types", 3L, firstCourse.getCourseID());
+        Lecture fourthLecture = lectureService.createLecture("Git", 4L, firstCourse.getCourseID());
+        Lecture fifthLecture = lectureService.createLecture("Github", 5L, firstCourse.getCourseID());
+        Lecture sixthLecture = lectureService.createLecture("Methods", 6L, firstCourse.getCourseID());
 
-        System.out.println("Number of lectures: " + Lecture.counter);
-        System.out.println("Sixth lecture's id: " + sixthLecture.courseID);
+        MainService.selectCategory(MainService.chooseCategory());
+        MainService.realisationLecture(MainService.optionLecture());
+
+//        int category = MainService.chooseCategory();
+//        MainService.selectCategory(category);
+//
+//        int choice = MainService.optionLecture();
+//        MainService.realisationLecture(choice);
     }
 }

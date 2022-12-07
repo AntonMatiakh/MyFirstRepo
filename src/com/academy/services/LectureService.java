@@ -4,7 +4,7 @@ import com.academy.models.Lecture;
 
 public class LectureService {
 
-    public Lecture createLecture(String name, long ID, long courseID) {
-        return new Lecture(name, ID, courseID);
+    public Lecture createLecture(String lectureName, long lectureID, long courseID) {
+        return new Lecture(lectureName, lectureID, courseID);
     }
 }
