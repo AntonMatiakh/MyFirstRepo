@@ -3,17 +3,26 @@ package com.academy.models;
 public class Lecture {
 
     public static long counter;
-    private long ID;
+    private String lectureName;
+    private long lectureID;
     public long courseID;
-    private String name;
 
     private Homework homework;
     private ExtraMaterial extraMaterial;
 
-    public Lecture(String name, long ID, long courseID) {
-        this.name = name;
-        this.ID = ID;
+    public Lecture(String lectureName, long lectureID, long courseID) {
+        this.lectureName = lectureName;
+        this.lectureID = lectureID;
         this.courseID = courseID;
         counter++;
+    }
+
+    @Override
+    public String toString() {
+        return "Lecture{" +
+                "lectureName='" + lectureName + '\'' +
+                ", lectureID=" + lectureID +
+                ", courseID=" + courseID +
+                '}';
     }
 }
