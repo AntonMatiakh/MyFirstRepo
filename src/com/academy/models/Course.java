@@ -2,20 +2,20 @@ package com.academy.models;
 
 public class Course {
 
-    public static long counter;
+    private static int courseCounter;
     private String courseName;
-    private long courseID;
+    private int courseID;
 
     private Teacher teacher;
     private Student student;
     private Lecture lecture;
 
-    public Course(String courseName, long courseID) {
+    public Course(String courseName, int courseID) {
         this.courseName = courseName;
         this.courseID = courseID;
     }
 
-    public long getCourseID() {
+    public int getCourseID() {
         return courseID;
     }
 }

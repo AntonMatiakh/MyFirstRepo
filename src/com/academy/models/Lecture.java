@@ -2,19 +2,19 @@ package com.academy.models;
 
 public class Lecture {
 
-    public static long counter;
+    private static int lectureCounter;
     private String lectureName;
-    private long lectureID;
-    public long courseID;
+    private int lectureID;
+    public int courseID;
 
     private Homework homework;
     private ExtraMaterial extraMaterial;
 
-    public Lecture(String lectureName, long lectureID, long courseID) {
+    public Lecture(String lectureName, int lectureID, int courseID) {
         this.lectureName = lectureName;
         this.lectureID = lectureID;
         this.courseID = courseID;
-        counter++;
+        lectureCounter++;
     }
 
     @Override

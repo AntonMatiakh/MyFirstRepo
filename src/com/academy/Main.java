@@ -1,3 +1,5 @@
+package com.academy;
+
 import com.academy.models.Course;
 import com.academy.models.Lecture;
 import com.academy.services.LectureService;
@@ -10,14 +12,14 @@ public class Main {
 
         LectureService lectureService = new LectureService();
 
-        Course firstCourse = new Course("Java", 2022L);
+        Course firstCourse = new Course("Java", 2022);
 
-        Lecture firstLecture = new Lecture("Introduction", 1L, firstCourse.getCourseID());
-        Lecture secondLecture = new Lecture("Variables", 2L, firstCourse.getCourseID());
-        Lecture thirdLecture = new Lecture("DataTypes", 3L, firstCourse.getCourseID());
-        Lecture fourthLecture = new Lecture("Git", 4L, firstCourse.getCourseID());
-        Lecture fifthLecture = new Lecture("GitHub", 5L, firstCourse.getCourseID());
-        Lecture sixthLecture = new Lecture("Methods", 6L, firstCourse.getCourseID());
+        Lecture firstLecture = lectureService.createLecture("Introduction", firstCourse.getCourseID());
+        Lecture secondLecture = lectureService.createLecture("Variables", firstCourse.getCourseID());
+        Lecture thirdLecture = lectureService.createLecture("DataTypes", firstCourse.getCourseID());
+        Lecture fourthLecture = lectureService.createLecture("Git", firstCourse.getCourseID());
+        Lecture fifthLecture = lectureService.createLecture("GitHub", firstCourse.getCourseID());
+        Lecture sixthLecture = lectureService.createLecture("Methods", firstCourse.getCourseID());
 
         Scanner scanner = new Scanner(System.in);
 
@@ -26,15 +28,15 @@ public class Main {
         while (true) {
             System.out.println("Welcome to 'Online School' project!");
             System.out.println("You have next options:");
-            System.out.println("'Continue' - input 1, 'Finish' - input 2, 'Restart' - input any number");
+            System.out.println("'Continue' - input 1, 'Finish' - input 0");
             System.out.println("Please, select necessary option and input appropriate number:");
             option = scanner.nextInt();
 
             if (option == 1) {
                 break;
-            } else if (option == 2) {
+            } else if (option == 0) {
                 System.out.println("That's all, thank you for attention, see you next time :)");
-                System.out.println("---------------------------END---------------------------");
+                System.out.println("--------------------PROGRAM FINISHED---------------------");
                 System.exit(0);
             }
         }
@@ -68,41 +70,41 @@ public class Main {
             case 4:
                 System.out.println("You have selected 'Lecture' category");
                 break;
+            default:
+                System.out.println("Sorry, nothing found... :(");
         }
 
         int answer;
 
-        System.out.println("We have already " + Lecture.counter + " lectures");
+        System.out.println("We have already " + lectureService.getLectureCounter() + " lectures");
         System.out.println("Would you like to create new lecture?");
-        System.out.println("If 'Yes' - input 1, if 'No' - input 2");
+        System.out.println("If 'Yes' - input 1, if 'No' - input 0");
         System.out.println("Please, input appropriate number:");
         answer = scanner.nextInt();
 
         while (answer == 1) {
             System.out.println("Enter lecture name:");
             String lectureName = scanner.next();
-            System.out.println("Enter lecture id:");
-            int lectureID = scanner.nextInt();
-            System.out.println(lectureService.createLecture(lectureName, lectureID, firstCourse.getCourseID()));
-            System.out.println("Now we have " + Lecture.counter + " lectures");
+            System.out.println(lectureService.createLecture(lectureName, firstCourse.getCourseID()));
+            System.out.println("Now we have " + lectureService.getLectureCounter() + " lectures");
 
-            if (Lecture.counter == 8) {
+            if (lectureService.getLectureCounter() == 8) {
                 System.out.println("That's all, thank you for attention, see you next time :)");
-                System.out.println("---------------------------END---------------------------");
+                System.out.println("--------------------PROGRAM FINISHED---------------------");
                 System.exit(0);
             }
 
             System.out.println("Would you like to create another lecture?");
-            System.out.println("If 'Yes' - input 1, if 'No' - input 2");
+            System.out.println("If 'Yes' - input 1, if 'No' - input 0");
             System.out.println("Please, input appropriate number:");
             answer = scanner.nextInt();
         }
-        if (answer == 2) {
+        if (answer == 0) {
             System.out.println("That's all, thank you for attention, see you next time :)");
-            System.out.println("---------------------------END---------------------------");
+            System.out.println("--------------------PROGRAM FINISHED---------------------");
         } else {
             System.out.println("Unfortunately, something went terribly wrong... :(");
-            System.out.println("------------------------END-----------------------");
+            System.out.println("-----------------PROGRAM FINISHED-----------------");
         }
         scanner.close();
     }
