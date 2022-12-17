@@ -11,20 +11,23 @@ public class Main {
 
         LectureService lectureService = new LectureService();
 
-        Lecture firstLecture = lectureService.createLecture("Intro", 1L, firstCourse.getCourseID());
-        Lecture secondLecture = lectureService.createLecture("Variables", 2L, firstCourse.getCourseID());
-        Lecture thirdLecture = lectureService.createLecture("Data_types", 3L, firstCourse.getCourseID());
-        Lecture fourthLecture = lectureService.createLecture("Git", 4L, firstCourse.getCourseID());
-        Lecture fifthLecture = lectureService.createLecture("Github", 5L, firstCourse.getCourseID());
-        Lecture sixthLecture = lectureService.createLecture("Methods", 6L, firstCourse.getCourseID());
+        Lecture firstLecture = lectureService.createLecture("Intro", 1L);
+        Lecture secondLecture = lectureService.createLecture("Variables", 2L);
+        Lecture thirdLecture = lectureService.createLecture("Data_types", 3L);
+        Lecture fourthLecture = lectureService.createLecture("Git", 4L);
+        Lecture fifthLecture = lectureService.createLecture("Github", 5L);
+        Lecture sixthLecture = lectureService.createLecture("Methods", 6L);
 
-        MainService.selectCategory(MainService.chooseCategory());
-        MainService.realisationLecture(MainService.optionLecture());
+        MainService.welcomeTo();
 
-//        int category = MainService.chooseCategory();
-//        MainService.selectCategory(category);
-//
-//        int choice = MainService.optionLecture();
+        //MainService.selectCategory(MainService.chooseCategory());
+        //MainService.realisationLecture(MainService.optionLecture());
+
+        int category = MainService.chooseCategory();
+        MainService.selectCategory(category);
+
+        int choice = MainService.optionLecture();
 //        MainService.realisationLecture(choice);
+        MainService.creationOfLecture(choice);
     }
 }
