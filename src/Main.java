@@ -20,14 +20,18 @@ public class Main {
 
         MainService.welcomeTo();
 
-        //MainService.selectCategory(MainService.chooseCategory());
+        //MainService.selectCategory(MainService.choiceOfCategory());
         //MainService.realisationLecture(MainService.optionLecture());
+
+        //int category = MainService.choiceOfCategory();
+        //MainService.selectCategory(category);
 
         int category = MainService.chooseCategory();
         MainService.selectCategory(category);
 
-        int choice = MainService.optionLecture();
+
+        //int choice = MainService.createNewLecture();
 //        MainService.realisationLecture(choice);
-        MainService.creationOfLecture(choice);
+        //MainService.creationOfLecture(choice);
     }
 }
