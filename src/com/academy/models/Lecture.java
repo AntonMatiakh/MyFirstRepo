@@ -2,7 +2,7 @@ package com.academy.models;
 
 public class Lecture {
 
-    private static int lectureCounter;
+    private static int counterLecture;
     private String lectureName;
     private int lectureID;
     public int courseID;
@@ -14,7 +14,7 @@ public class Lecture {
         this.lectureName = lectureName;
         this.lectureID = lectureID;
         this.courseID = courseID;
-        lectureCounter++;
+        counterLecture++;
     }
 
     @Override

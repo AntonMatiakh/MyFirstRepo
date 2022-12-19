@@ -4,14 +4,14 @@ import com.academy.models.Lecture;
 
 public class LectureService {
 
-    private static int lectureCounter;
+    private static int counterLecture;
 
     public Lecture createLecture(String lectureName, int courseID) {
-        lectureCounter++;
-        return new Lecture(lectureName, lectureCounter, courseID);
+        counterLecture++;
+        return new Lecture(lectureName, counterLecture, courseID);
     }
 
-    public int getLectureCounter() {
-        return lectureCounter;
+    public int getCounterLecture() {
+        return counterLecture;
     }
 }
