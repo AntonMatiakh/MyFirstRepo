@@ -4,7 +4,11 @@ public class Course {
 
     private static int courseCounter;
     private String courseName;
-    private int courseID;
+
+    /**
+     * Changed access modifier to 'static' in order to get access to 'getCourseID' in 'Main' class
+     */
+    private static int courseID;
 
     private Teacher teacher;
     private Student student;
@@ -13,9 +17,28 @@ public class Course {
     public Course(String courseName, int courseID) {
         this.courseName = courseName;
         this.courseID = courseID;
+        courseCounter++;
     }
 
-    public int getCourseID() {
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseName='" + courseName + '\'' +
+                ", courseID=" + courseID +
+                '}';
+    }
+
+    /**
+     * Changed access modifier to 'static' in order to get access to 'getCourseID' in 'Main' class
+     */
+    public static int getCourseID() {
         return courseID;
+    }
+
+    /**
+     * Changed access modifier to 'static' in order to get access to 'getCourseCounter' in 'Main' class
+     */
+    public static int getCourseCounter() {
+        return courseCounter;
     }
 }

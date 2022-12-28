@@ -2,7 +2,7 @@ package com.academy.models;
 
 public class Lecture {
 
-    private static int counterLecture;
+    private static int lectureCounter;
     private String lectureName;
     private int lectureID;
     public int courseID;
@@ -10,11 +10,22 @@ public class Lecture {
     private Homework homework;
     private ExtraMaterial extraMaterial;
 
+    public Lecture(){
+
+    }
+    /**
+    * In this variant of constructor it is possible to make safe delete of 'int lectureID' without any
+     * damage to code. Or make 'this.lectureID = lectureID;' to input lectureID by own as an argument.
+     */
     public Lecture(String lectureName, int lectureID, int courseID) {
+        lectureCounter++;
         this.lectureName = lectureName;
-        this.lectureID = lectureID;
+        this.lectureID = lectureCounter;
         this.courseID = courseID;
-        counterLecture++;
+    }
+
+    public static int getLectureCounter() {
+        return lectureCounter;
     }
 
     @Override

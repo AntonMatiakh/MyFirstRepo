@@ -1,6 +1,8 @@
 package com.academy;
 
 import com.academy.models.Course;
+import com.academy.models.Lecture;
+import com.academy.repository.LectureRepository;
 import com.academy.services.LectureService;
 
 import java.util.Scanner;
@@ -9,13 +11,15 @@ public class MainService {
 
     private static final Scanner USER_INPUT = new Scanner(System.in);
 
-    private static final String NOTHING_FOUND = "\nSorry, nothing found...:(\nLet's try again\n";
+    private static final String NOTHING_FOUND =
+            """
+                    Sorry, nothing found...:(
+                    Let's try again""";
 
     private static final String OPTION_CHOICE =
             """
-            If 'Yes' - input 1, if 'No' - input 0
-            Please, input appropriate number:
-            """;
+                    If 'Yes' - input 1, if 'No' - input 0
+                    Please, input appropriate number:""";
 
     public static void finishProgram() {
         System.out.println("That's all, thank you for attention, see you next time :)");
@@ -84,25 +88,35 @@ public class MainService {
         }
     }
 
-    public static int createNewLecture(LectureService lectureService) {
-        System.out.println("We have already " + lectureService.getCounterLecture() + " lectures");
+    /**
+    * Changed parameter from 'Lecture lecture' to 'LectureRepository lectureRepository' in order to insert it into
+     * variable 'choice' in 'Main' class. As a result 'int choice = MainService.createNewLecture(lectureRepository);'
+     */
+    public static int createNewLecture(LectureRepository lectureRepository) {
+        System.out.println("We have already " + Lecture.getLectureCounter() + " lectures");
+        //System.out.println("We have already " + lectureService.getCounterLecture() + " lectures");
         System.out.println("Would you like to create new lecture?");
         System.out.println(OPTION_CHOICE);
         return USER_INPUT.nextInt();
     }
 
 
-    public static void produceLecture (int choice, LectureService lectureService, Course firstCourse) {
+    public static void produceLecture(int choice, LectureService lectureService,
+                                      Course firstCourse, LectureRepository lectureRepository) {
 
-        int courseID = firstCourse.getCourseID();
+        //int courseID = Course.getCourseID();
 
         while (choice == 1) {
             System.out.println("Enter lecture name:");
             String lectureName = USER_INPUT.next();
-            System.out.println(lectureService.createLecture(lectureName, firstCourse.getCourseID()));
-            System.out.println("Now we have " + lectureService.getCounterLecture() + " lectures");
+            LectureRepository.addToArray(lectureService.createLecture(lectureName, Course.getCourseID()));
+            System.out.println("Congratulations! You have just created new lecture!");
+            System.out.println("Now we have " + Lecture.getLectureCounter() + " lectures");
+            System.out.println(LectureRepository.showCreatedLectures());
 
-            if (lectureService.getCounterLecture() == 8) {
+
+            if (Lecture.getLectureCounter() == 8) {
+                System.out.println("Array is filled! You have reached maximum number of lectures!");
                 finishProgram();
             }
 
