@@ -27,7 +27,7 @@ public class MainService {
         System.exit(0);
     }
 
-    public static void welcomeTo () {
+    public static void welcomeTo() {
 
         int startOption;
 
@@ -89,12 +89,11 @@ public class MainService {
     }
 
     /**
-    * Changed parameter from 'Lecture lecture' to 'LectureRepository lectureRepository' in order to insert it into
+     * Changed parameter from 'Lecture lecture' to 'LectureRepository lectureRepository' in order to insert it into
      * variable 'choice' in 'Main' class. As a result 'int choice = MainService.createNewLecture(lectureRepository);'
      */
     public static int createNewLecture(LectureRepository lectureRepository) {
         System.out.println("We have already " + Lecture.getLectureCounter() + " lectures");
-        //System.out.println("We have already " + lectureService.getCounterLecture() + " lectures");
         System.out.println("Would you like to create new lecture?");
         System.out.println(OPTION_CHOICE);
         return USER_INPUT.nextInt();
@@ -103,8 +102,6 @@ public class MainService {
 
     public static void produceLecture(int choice, LectureService lectureService,
                                       Course firstCourse, LectureRepository lectureRepository) {
-
-        //int courseID = Course.getCourseID();
 
         while (choice == 1) {
             System.out.println("Enter lecture name:");

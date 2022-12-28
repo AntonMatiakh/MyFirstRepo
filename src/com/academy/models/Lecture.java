@@ -10,11 +10,8 @@ public class Lecture {
     private Homework homework;
     private ExtraMaterial extraMaterial;
 
-    public Lecture(){
-
-    }
     /**
-    * In this variant of constructor it is possible to make safe delete of 'int lectureID' without any
+     * In this variant of constructor it is possible to make safe delete of 'int lectureID' without any
      * damage to code. Or make 'this.lectureID = lectureID;' to input lectureID by own as an argument.
      */
     public Lecture(String lectureName, int lectureID, int courseID) {
@@ -36,4 +33,5 @@ public class Lecture {
                 ", courseID=" + courseID +
                 '}';
     }
+
 }
