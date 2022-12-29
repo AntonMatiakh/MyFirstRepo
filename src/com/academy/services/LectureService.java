@@ -11,7 +11,8 @@ public class LectureService {
         return new Lecture (lectureName, lectureCounter, courseID);
     }
 
-    public static int getCounterLecture() {
+    public static int getLectureCounter() {
         return lectureCounter;
     }
+
 }

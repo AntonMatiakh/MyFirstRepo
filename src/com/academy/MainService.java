@@ -9,6 +9,10 @@ import java.util.Scanner;
 
 public class MainService {
 
+    LectureRepository lectureRepository = new LectureRepository();
+
+    Course firstCourse = new Course("Java", 2022);
+
     private static final Scanner USER_INPUT = new Scanner(System.in);
 
     private static final String NOTHING_FOUND =
@@ -21,13 +25,28 @@ public class MainService {
                     If 'Yes' - input 1, if 'No' - input 0
                     Please, input appropriate number:""";
 
-    public static void finishProgram() {
+    public void finishProgram() {
         System.out.println("That's all, thank you for attention, see you next time :)");
         System.out.println("----------------------PROGRAM FINISHED-------------------");
         System.exit(0);
     }
 
-    public static void welcomeTo() {
+    public void initData() {
+
+        //Course firstCourse = new Course("Java", 2022);
+        lectureRepository.addToArray(new Lecture("Intro", Lecture.getLectureCounter(), firstCourse.getCourseID()));
+        lectureRepository.addToArray(new Lecture("Git", Lecture.getLectureCounter(), firstCourse.getCourseID()));
+        lectureRepository.addToArray(new Lecture("GitHub", Lecture.getLectureCounter(), firstCourse.getCourseID()));
+
+        System.out.println("Congratulations! We have just created " + Lecture.getLectureCounter() +
+                " lectures and " + Course.getCourseCounter() + " course(s)");
+
+        System.out.println("Here we go:");
+        System.out.println(firstCourse);
+        System.out.println(lectureRepository.showCreatedLectures());
+    }
+
+    public void welcomeTo() {
 
         int startOption;
 
@@ -48,7 +67,7 @@ public class MainService {
         }
     }
 
-    public static int chooseCategory() {
+    public int chooseCategory() {
 
         int category;
 
@@ -67,8 +86,7 @@ public class MainService {
         return category;
     }
 
-
-    public static void selectCategory(int category) {
+    public void selectCategory(int category) {
 
         switch (category) {
             case 1:
@@ -91,8 +109,11 @@ public class MainService {
     /**
      * Changed parameter from 'Lecture lecture' to 'LectureRepository lectureRepository' in order to insert it into
      * variable 'choice' in 'Main' class. As a result 'int choice = MainService.createNewLecture(lectureRepository);'
+     * But later made safe delete of parameter 'LectureRepository lectureRepository' without any damage to code.
+     * As a result now in 'Main' class we have 'int choice = MainService.createNewLecture()' instead of
+     * 'int choice = MainService.createNewLecture(lectureRepository)'
      */
-    public static int createNewLecture(LectureRepository lectureRepository) {
+    public int createNewLecture() {
         System.out.println("We have already " + Lecture.getLectureCounter() + " lectures");
         System.out.println("Would you like to create new lecture?");
         System.out.println(OPTION_CHOICE);
@@ -100,22 +121,30 @@ public class MainService {
     }
 
 
-    public static void produceLecture(int choice, LectureService lectureService,
-                                      Course firstCourse, LectureRepository lectureRepository) {
+    /**
+     * Made a safe delete of parameters 'Course firstCourse' and 'LectureRepository lectureRepository' without any
+     * damage to code. As a result now in 'Main' class we have 'MainService.produceLecture(choice, lectureService)'
+     * instead of 'MainService.produceLecture(choice, lectureService, firstCourse, lectureRepository)'. More over,
+     * line 'public static Course firstCourse' is no more necessary in the very beginning of 'Main' class.
+     */
+    public void produceLecture(int choice, LectureService lectureService) {
 
         while (choice == 1) {
             System.out.println("Enter lecture name:");
             String lectureName = USER_INPUT.next();
-            LectureRepository.addToArray(lectureService.createLecture(lectureName, Course.getCourseID()));
+            lectureRepository.addToArray(lectureService.createLecture(lectureName, firstCourse.getCourseID()));
             System.out.println("Congratulations! You have just created new lecture!");
             System.out.println("Now we have " + Lecture.getLectureCounter() + " lectures");
-            System.out.println(LectureRepository.showCreatedLectures());
+            System.out.println(lectureRepository.showCreatedLectures());
 
 
-            if (Lecture.getLectureCounter() == 8) {
-                System.out.println("Array is filled! You have reached maximum number of lectures!");
-                finishProgram();
-            }
+            /**
+             * This block of code possibly will be used in future.
+             */
+//            if (Lecture.getLectureCounter() == 8) {
+//                System.out.println("Array is filled! You have reached maximum number of lectures!");
+//                finishProgram();
+//            }
 
             System.out.println("Would you like to create another lecture?");
             System.out.println(OPTION_CHOICE);

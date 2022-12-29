@@ -3,12 +3,10 @@ package com.academy.models;
 public class Course {
 
     private static int courseCounter;
+
     private String courseName;
 
-    /**
-     * Changed access modifier to 'static' in order to get access to 'getCourseID' in 'Main' class
-     */
-    private static int courseID;
+    private int courseID;
 
     private Teacher teacher;
     private Student student;
@@ -28,17 +26,16 @@ public class Course {
                 '}';
     }
 
-    /**
-     * Changed access modifier to 'static' in order to get access to 'getCourseID' in 'Main' class
-     */
-    public static int getCourseID() {
+    public int getCourseID() {
         return courseID;
     }
 
     /**
      * Changed access modifier to 'static' in order to get access to 'getCourseCounter' in 'Main' class
      */
+
     public static int getCourseCounter() {
         return courseCounter;
     }
+
 }
