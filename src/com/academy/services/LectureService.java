@@ -3,15 +3,15 @@ package com.academy.services;
 import com.academy.models.Lecture;
 
 public class LectureService {
-
-    private static int counterLecture;
+    private static int lectureCounter;
 
     public Lecture createLecture(String lectureName, int courseID) {
-        counterLecture++;
-        return new Lecture(lectureName, counterLecture, courseID);
+        lectureCounter++;
+        return new Lecture(lectureName, lectureCounter, courseID);
     }
 
-    public int getCounterLecture() {
-        return counterLecture;
+    public static int getLectureCounter() {
+        return lectureCounter;
     }
+
 }

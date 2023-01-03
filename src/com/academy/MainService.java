@@ -1,29 +1,53 @@
 package com.academy;
 
 import com.academy.models.Course;
+import com.academy.models.Lecture;
+import com.academy.repository.LectureRepository;
 import com.academy.services.LectureService;
 
 import java.util.Scanner;
 
 public class MainService {
 
+    LectureRepository lectureRepository = new LectureRepository();
+
+    Course firstCourse = new Course("Java", 2022);
+
     private static final Scanner USER_INPUT = new Scanner(System.in);
 
-    private static final String NOTHING_FOUND = "\nSorry, nothing found...:(\nLet's try again\n";
+    private static final String NOTHING_FOUND =
+            """
+                    Sorry, nothing found...:(
+                    Let's try again""";
 
     private static final String OPTION_CHOICE =
             """
-            If 'Yes' - input 1, if 'No' - input 0
-            Please, input appropriate number:
-            """;
+                    If 'Yes' - input 1, if 'No' - input 0
+                    Please, input appropriate number:""";
 
-    public static void finishProgram() {
+    public void finishProgram() {
         System.out.println("That's all, thank you for attention, see you next time :)");
         System.out.println("----------------------PROGRAM FINISHED-------------------");
         System.exit(0);
     }
 
-    public static void welcomeTo () {
+    public void initData() {
+
+        //Course firstCourse = new Course("Java", 2022);
+        lectureRepository.addToArray(new Lecture("Intro", Lecture.getLectureCounter(), firstCourse.getCourseID()));
+        lectureRepository.addToArray(new Lecture("Git", Lecture.getLectureCounter(), firstCourse.getCourseID()));
+        lectureRepository.addToArray(new Lecture("GitHub", Lecture.getLectureCounter(), firstCourse.getCourseID()));
+
+        System.out.println("Congratulations! We have just created " + Lecture.getLectureCounter() +
+                " lectures and " + Course.getCourseCounter() + " course(s)");
+
+        System.out.println("Here we go:");
+        System.out.println(firstCourse);
+        System.out.println(lectureRepository.showCreatedLectures());
+
+    }
+
+    public void welcomeTo () {
 
         int startOption;
 
@@ -44,7 +68,7 @@ public class MainService {
         }
     }
 
-    public static int chooseCategory() {
+    public int chooseCategory() {
 
         int category;
 
@@ -63,8 +87,7 @@ public class MainService {
         return category;
     }
 
-
-    public static void selectCategory(int category) {
+    public void selectCategory(int category) {
 
         switch (category) {
             case 1:
@@ -84,27 +107,43 @@ public class MainService {
         }
     }
 
-    public static int createNewLecture(LectureService lectureService) {
-        System.out.println("We have already " + lectureService.getCounterLecture() + " lectures");
+    /**
+     * Changed parameter from 'Lecture lecture' to 'LectureRepository lectureRepository' in order to insert it into
+     * variable 'choice' in 'Main' class. As a result 'int choice = MainService.createNewLecture(lectureRepository);'
+     * But later made safe delete of parameter 'LectureRepository lectureRepository' without any damage to code.
+     * As a result now in 'Main' class we have 'int choice = MainService.createNewLecture()' instead of
+     * 'int choice = MainService.createNewLecture(lectureRepository)'
+     */
+    public int createNewLecture() {
+        System.out.println("We have already " + Lecture.getLectureCounter() + " lectures");
         System.out.println("Would you like to create new lecture?");
         System.out.println(OPTION_CHOICE);
         return USER_INPUT.nextInt();
     }
 
-
-    public static void produceLecture (int choice, LectureService lectureService, Course firstCourse) {
-
-        int courseID = firstCourse.getCourseID();
+    /**
+     * Made a safe delete of parameters 'Course firstCourse' and 'LectureRepository lectureRepository' without any
+     * damage to code. As a result now in 'Main' class we have 'MainService.produceLecture(choice, lectureService)'
+     * instead of 'MainService.produceLecture(choice, lectureService, firstCourse, lectureRepository)'. More over,
+     * line 'public static Course firstCourse' is no more necessary in the very beginning of 'Main' class.
+     */
+    public void produceLecture (int choice, LectureService lectureService) {
 
         while (choice == 1) {
             System.out.println("Enter lecture name:");
             String lectureName = USER_INPUT.next();
-            System.out.println(lectureService.createLecture(lectureName, firstCourse.getCourseID()));
-            System.out.println("Now we have " + lectureService.getCounterLecture() + " lectures");
+            lectureRepository.addToArray(lectureService.createLecture(lectureName, firstCourse.getCourseID()));
+            System.out.println("Congratulations! You have just created new lecture!");
+            System.out.println("Now we have " + Lecture.getLectureCounter() + " lectures");
+            System.out.println(lectureRepository.showCreatedLectures());
 
-            if (lectureService.getCounterLecture() == 8) {
-                finishProgram();
-            }
+            /**
+             * This block of code possibly will be used in future.
+             */
+//            if (Lecture.getLectureCounter() == 8) {
+//                System.out.println("Array is filled! You have reached maximum number of lectures!");
+//                finishProgram();
+//            }
 
             System.out.println("Would you like to create another lecture?");
             System.out.println(OPTION_CHOICE);
@@ -118,4 +157,5 @@ public class MainService {
         }
         USER_INPUT.close();
     }
+
 }
