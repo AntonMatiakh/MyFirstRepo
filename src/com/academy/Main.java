@@ -1,5 +1,6 @@
 package com.academy;
 
+import com.academy.models.*;
 import com.academy.services.LectureService;
 
 public class Main {
@@ -14,12 +15,8 @@ public class Main {
 
         mainService.initData();
 
-        int choice = mainService.createNewLecture();
+        mainService.selectOption(mainService.chooseOption());
 
-        LectureService lectureService = new LectureService();
-
-        mainService.produceLecture(choice, lectureService);
-        
     }
 
 }

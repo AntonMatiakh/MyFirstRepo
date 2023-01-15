@@ -1,12 +1,12 @@
 package com.academy.repository;
 
 import com.academy.models.Lecture;
+import com.academy.models.Model;
 
 import java.util.Arrays;
 
-public class LectureRepository {
+public class LectureRepository extends Repository {
     private static final int STANDARD_INITIAL_SIZE = 5;
-
     private Lecture[] lectures;
 
     public LectureRepository() {
@@ -22,50 +22,42 @@ public class LectureRepository {
         }
     }
 
-    public void addToArray(Lecture lecture) {
-        int blankSell = 0;
-        for (int i = 0; i < lectures.length; i++) {
-            if (lectures[i] == null) {
-                lectures[i] = lecture;
-                blankSell++;
-                break;
-            }
-        }
-        if (blankSell == 0) {
-            int addMark = lectures.length;
-            increaseArraySize();
-            lectures[addMark] = lecture;
-        }
+    @Override
+    public void add(Model model) {
+        super.add(model);
     }
 
-    public void increaseArraySize() {
-        int newSize = (lectures.length * 3) / 2 + 1;
-        Lecture[] increasedSizeArray = new Lecture[newSize];
-        System.arraycopy(lectures, 0, increasedSizeArray, 0, lectures.length);
-        lectures = increasedSizeArray;
+    @Override
+    public Model[] getAll() {
+        return super.getAll();
     }
 
-    public String showCreatedLectures() {
-        int j = 0;
-        int k = 0;
-        for (int i = 0; i < lectures.length; i++) {
-            if (lectures[i] == null) continue;
-            j++;
-        }
-        String[] stringArray = new String[j];
-        for (int i = 0; i < lectures.length; i++) {
-            if (lectures[i] == null) continue;
-            stringArray[k] = lectures[i].toString();
-            k++;
-        }
-        return "Created lectures: " + Arrays.toString(stringArray);
+    @Override
+    public String showCreatedModels() {
+        return super.showCreatedModels();
+    }
+
+    @Override
+    public void getById(int lectureId) {
+        super.getById(lectureId);
+    }
+
+    @Override
+    public void deleteById(int lectureId) {
+        super.deleteById(lectureId);
+    }
+
+    public Lecture[] getLectures() {
+        return lectures;
     }
 
     @Override
     public String toString() {
+
         return "LectureRepository{" +
-                "lectures=" + Arrays.toString(lectures) +
+                "lectures=" + Arrays.toString(modelArray) +
                 '}';
+
     }
 
 }

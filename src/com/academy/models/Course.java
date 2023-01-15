@@ -1,37 +1,59 @@
 package com.academy.models;
 
-public class Course {
+public class Course extends Model {
 
-    private static int courseCounter;
-    private String courseName;
-    private int courseID;
+    private static int counter;
 
     private Teacher teacher;
     private Student student;
     private Lecture lecture;
 
-    public Course(String courseName, int courseID) {
-        this.courseName = courseName;
-        this.courseID = courseID;
-        courseCounter++;
+    public Course(String name, int id) {
+        super(name, id);
+        counter++;
     }
 
-    public int getCourseID() {
-        return courseID;
+    public Course(String name) {
+        super(name, ++counter);
     }
 
-    /**
-     * Changed access modifier to 'static' in order to get access to 'getCourseCounter' in 'Main' class
-     */
-    public static int getCourseCounter() {
-        return courseCounter;
+    public Course() {
+        super(++counter);
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
     }
 
     @Override
     public String toString() {
         return "Course{" +
-                "courseName='" + courseName + '\'' +
-                ", courseID=" + courseID +
+                "name='" + super.getName() + '\'' +
+                ", id=" + super.getId() +
                 '}';
     }
 

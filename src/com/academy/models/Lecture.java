@@ -1,36 +1,53 @@
 package com.academy.models;
 
-public class Lecture {
-
-    private static int lectureCounter;
-    private String lectureName;
-    private int lectureID;
-    public int courseID;
-
+public class Lecture extends Model {
+    private static int counter;
     private Homework homework;
     private ExtraMaterial extraMaterial;
 
-    /**
-     * In this variant of constructor it is possible to make safe delete of 'int lectureID' without any
-     * damage to code. Or make 'this.lectureID = lectureID;' to input lectureID by own as an argument.
-     */
-    public Lecture(String lectureName, int lectureID, int courseID) {
-        lectureCounter++;
-        this.lectureName = lectureName;
-        this.lectureID = lectureCounter;
-        this.courseID = courseID;
+    public Lecture(String name, int id, int courseID) {
+        super(name, id, courseID);
+        counter++;
     }
 
-    public static int getLectureCounter() {
-        return lectureCounter;
+    public Lecture(String name, int courseId) {
+        super(name, ++counter, courseId);
+    }
+
+    public Lecture(String name) {
+        super(name, ++counter);
+    }
+
+    public Lecture() {
+        super(++counter);
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public Homework getHomework() {
+        return homework;
+    }
+
+    public void setHomework(Homework homework) {
+        this.homework = homework;
+    }
+
+    public ExtraMaterial getExtraMaterial() {
+        return extraMaterial;
+    }
+
+    public void setExtraMaterial(ExtraMaterial extraMaterial) {
+        this.extraMaterial = extraMaterial;
     }
 
     @Override
     public String toString() {
         return "Lecture{" +
-                "lectureName='" + lectureName + '\'' +
-                ", lectureID=" + lectureID +
-                ", courseID=" + courseID +
+                "name='" + super.getName() + '\'' +
+                ", id=" + super.getId() +
+                ", courseID=" + super.getCourseId() +
                 '}';
     }
 
