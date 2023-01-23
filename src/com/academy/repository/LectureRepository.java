@@ -6,17 +6,16 @@ import com.academy.models.Model;
 import java.util.Arrays;
 
 public class LectureRepository extends Repository {
-    private static final int STANDARD_INITIAL_SIZE = 5;
     private Lecture[] lectures;
 
     public LectureRepository() {
-        this.lectures = new Lecture[STANDARD_INITIAL_SIZE];
+        this.lectures = new Lecture[getSTANDARD_INITIAL_SIZE()];
     }
 
     public LectureRepository(int inputSize) {
         if (inputSize < 1) {
             System.out.println("WRONG ARGUMENT, CREATING STANDARD SIZED ARRAY");
-            this.lectures = new Lecture[STANDARD_INITIAL_SIZE];
+            this.lectures = new Lecture[getSTANDARD_INITIAL_SIZE()];
         } else {
             this.lectures = new Lecture[inputSize];
         }
@@ -29,22 +28,33 @@ public class LectureRepository extends Repository {
 
     @Override
     public Model[] getAll() {
+        System.out.println("Now we have next lectures:");
         return super.getAll();
     }
 
     @Override
-    public String showCreatedModels() {
-        return super.showCreatedModels();
-    }
-
-    @Override
     public void getById(int lectureId) {
-        super.getById(lectureId);
+        if (lectureId <= 0) {
+            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
+        } else if (lectureId > Lecture.getCounter() || modelsArray[lectureId - 1] == null) {
+            System.out.println("Sorry, lecture with id=" + lectureId + " doesn't exist!");
+        } else {
+            System.out.println("We have just found:");
+            super.getById(lectureId - 1);
+        }
     }
 
     @Override
     public void deleteById(int lectureId) {
-        super.deleteById(lectureId);
+        if (lectureId <= 0) {
+            System.out.println("WRONG ARGUMENT!!! Lecture id must be > 0 !!!");
+        } else if (lectureId > Lecture.getCounter()) {
+            System.out.println("Sorry, lecture with id=" + lectureId + " doesn't exist!");
+        } else if (lectureId - 1 != modelsArray.length) {
+            modelsArray[lectureId - 1] = null;
+            System.out.println("Lecture with id=" + lectureId + " has just been deleted!");
+            System.out.println(Arrays.toString(getAll()));
+        }
     }
 
     public Lecture[] getLectures() {
@@ -53,11 +63,9 @@ public class LectureRepository extends Repository {
 
     @Override
     public String toString() {
-
         return "LectureRepository{" +
-                "lectures=" + Arrays.toString(modelArray) +
+                "lectures=" + Arrays.toString(modelsArray) +
                 '}';
-
     }
 
 }

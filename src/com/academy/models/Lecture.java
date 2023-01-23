@@ -2,6 +2,10 @@ package com.academy.models;
 
 public class Lecture extends Model {
     private static int counter;
+
+    private int personId;
+
+    private Person person;
     private Homework homework;
     private ExtraMaterial extraMaterial;
 
@@ -12,6 +16,11 @@ public class Lecture extends Model {
 
     public Lecture(String name, int courseId) {
         super(name, ++counter, courseId);
+    }
+
+    public Lecture(String name, int courseId, Person person) {
+        super(name, ++counter, courseId);
+        this.person = person;
     }
 
     public Lecture(String name) {
@@ -42,13 +51,21 @@ public class Lecture extends Model {
         this.extraMaterial = extraMaterial;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     @Override
     public String toString() {
         return "Lecture{" +
                 "name='" + super.getName() + '\'' +
                 ", id=" + super.getId() +
                 ", courseID=" + super.getCourseId() +
+                ", person=" + person +
                 '}';
     }
-
 }

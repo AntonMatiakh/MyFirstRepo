@@ -6,19 +6,28 @@ public class Model {
     private int id;
     private int courseId;
 
-    public Model(String name, int id, int courseId) {
+    protected Model(String name, int id, int courseId) {
         this.name = name;
         this.id = id;
         this.courseId = courseId;
     }
 
-    public Model(String name, int id) {
+    protected Model(String name, int id, int courseId, Person person) {
+        this.name = name;
+        this.id = id;
+        this.courseId = courseId;
+    }
+
+    protected Model(String name, int id) {
         this.name = name;
         this.id = id;
     }
 
     public Model (int id) {
         this.id = id;
+    }
+
+    protected Model() {
     }
 
     public String getName() {
