@@ -23,10 +23,6 @@ public class Model {
         this.id = id;
     }
 
-    public Model (int id) {
-        this.id = id;
-    }
-
     protected Model() {
     }
 

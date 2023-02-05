@@ -17,10 +17,6 @@ public class Student extends Model {
         super(name, ++counter);
     }
 
-    public Student() {
-        super(++counter);
-    }
-
     public static int getCounter() {
         return counter;
     }

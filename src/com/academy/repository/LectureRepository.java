@@ -7,7 +7,9 @@ import java.util.Arrays;
 
 public class LectureRepository extends Repository {
     private Lecture[] lectures;
-
+    public Lecture[] getLectures() {
+        return lectures;
+    }
     public LectureRepository() {
         this.lectures = new Lecture[getSTANDARD_INITIAL_SIZE()];
     }
@@ -33,32 +35,25 @@ public class LectureRepository extends Repository {
     }
 
     @Override
-    public void getById(int lectureId) {
-        if (lectureId <= 0) {
+    public void getById(int inputId) {
+
+        if (inputId <= 0)
             System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
-        } else if (lectureId > Lecture.getCounter() || modelsArray[lectureId - 1] == null) {
-            System.out.println("Sorry, lecture with id=" + lectureId + " doesn't exist!");
-        } else {
-            System.out.println("We have just found:");
-            super.getById(lectureId - 1);
-        }
+        else if (inputId > Lecture.getCounter())
+            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
+       else super.getById(inputId);
+
     }
 
     @Override
-    public void deleteById(int lectureId) {
-        if (lectureId <= 0) {
-            System.out.println("WRONG ARGUMENT!!! Lecture id must be > 0 !!!");
-        } else if (lectureId > Lecture.getCounter()) {
-            System.out.println("Sorry, lecture with id=" + lectureId + " doesn't exist!");
-        } else if (lectureId - 1 != modelsArray.length) {
-            modelsArray[lectureId - 1] = null;
-            System.out.println("Lecture with id=" + lectureId + " has just been deleted!");
-            System.out.println(Arrays.toString(getAll()));
-        }
-    }
+    public void deleteById(int inputId) {
 
-    public Lecture[] getLectures() {
-        return lectures;
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
+        else if (inputId > Lecture.getCounter())
+            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
+        else super.deleteById(inputId);
+
     }
 
     @Override

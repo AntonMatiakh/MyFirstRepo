@@ -2,7 +2,7 @@ package com.academy.models;
 
 public class Homework extends Model {
 
-    public static int counter;
+    private static int counter;
 
     public Homework(String name, int id, int courseId) {
         super(name, id, courseId);
@@ -15,10 +15,6 @@ public class Homework extends Model {
 
     public Homework(String name) {
         super(name, ++counter);
-    }
-
-    public Homework() {
-        super(++counter);
     }
 
     public static int getCounter() {

@@ -17,10 +17,6 @@ public class Course extends Model {
         super(name, ++counter);
     }
 
-    public Course() {
-        super(++counter);
-    }
-
     public static int getCounter() {
         return counter;
     }

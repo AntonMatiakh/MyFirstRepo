@@ -17,10 +17,6 @@ public class ExtraMaterial extends Model {
         super(name, ++counter);
     }
 
-    public ExtraMaterial() {
-        super(++counter);
-    }
-
     public static int getCounter() {
         return counter;
     }

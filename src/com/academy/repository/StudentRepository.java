@@ -1,10 +1,7 @@
 package com.academy.repository;
 
 import com.academy.models.Model;
-import com.academy.models.Person;
 import com.academy.models.Student;
-
-import java.util.Arrays;
 
 public class StudentRepository extends Repository {
     private Student[] students;
@@ -19,28 +16,21 @@ public class StudentRepository extends Repository {
     }
 
     @Override
-    public void getById(int studentId) {
-        if (studentId <= 0) {
+    public void getById(int inputId) {
+        if (inputId <= 0)
             System.out.println("WRONG ARGUMENT!!! Student's id must be > 0 !!!");
-        } else if (studentId > Person.getCounter() || modelsArray[studentId - 1] == null) {
-            System.out.println("Sorry, student with id=" + studentId + " doesn't exist!");
-        } else {
-            System.out.println("We have just found:");
-            super.getById(studentId - 1);
-        }
+        else if (inputId > Student.getCounter())
+            System.out.println("Sorry, student with id=" + inputId + " doesn't exist!");
+        else super.getById(inputId);
     }
 
     @Override
-    public void deleteById(int studentId) {
-        if (studentId <= 0) {
+    public void deleteById(int inputId) {
+        if (inputId <= 0)
             System.out.println("WRONG ARGUMENT!!! Student's id must be > 0 !!!");
-        } else if (studentId > Person.getCounter()) {
-            System.out.println("Sorry, student with id=" + studentId + " doesn't exist!");
-        } else if (studentId - 1 != modelsArray.length) {
-            modelsArray[studentId - 1] = null;
-            System.out.println("Student with id=" + studentId + " has just been deleted!");
-            System.out.println(Arrays.toString(getAll()));
-        }
+        else if (inputId > Student.getCounter())
+            System.out.println("Sorry, student with id=" + inputId + " doesn't exist!");
+        else super.deleteById(inputId);
     }
 
     @Override

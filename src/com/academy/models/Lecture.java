@@ -4,6 +4,7 @@ public class Lecture extends Model {
     private static int counter;
 
     private int personId;
+    private String description;
 
     private Person person;
     private Homework homework;
@@ -23,12 +24,19 @@ public class Lecture extends Model {
         this.person = person;
     }
 
-    public Lecture(String name) {
-        super(name, ++counter);
+    public Lecture(String name, int courseId, String description) {
+        super(name, ++counter, courseId);
+        this.description = description;
     }
 
-    public Lecture() {
-        super(++counter);
+    public Lecture(String name, int courseId, String description, Person person) {
+        super(name, ++counter, courseId);
+        this.description = description;
+        this.person = person;
+    }
+
+    public Lecture(String name) {
+        super(name, ++counter);
     }
 
     public static int getCounter() {
@@ -65,6 +73,7 @@ public class Lecture extends Model {
                 "name='" + super.getName() + '\'' +
                 ", id=" + super.getId() +
                 ", courseID=" + super.getCourseId() +
+                ", description=" + description +
                 ", person=" + person +
                 '}';
     }
