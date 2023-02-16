@@ -35,9 +35,9 @@ public class Lecture extends Model {
         this.person = person;
     }
 
-    public Lecture(String name) {
-        super(name, ++counter);
-    }
+//    public Lecture(String name) {
+//        super(name, ++counter);
+//    }
 
     public static int getCounter() {
         return counter;

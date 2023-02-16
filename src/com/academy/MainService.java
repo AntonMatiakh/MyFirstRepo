@@ -2,38 +2,42 @@ package com.academy;
 
 import com.academy.models.*;
 import com.academy.repository.LectureRepository;
+import com.academy.repository.PersonRepository;
 import com.academy.repository.StudentRepository;
 import com.academy.repository.TeacherRepository;
+import com.academy.services.PersonService;
 
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainService {
+
+    PersonService personService = new PersonService();
     LectureRepository lectureRepository = new LectureRepository();
     TeacherRepository teacherRepository = new TeacherRepository();
     StudentRepository studentRepository = new StudentRepository();
 
+    //PersonRepository personRepository = new PersonRepository();
 
     Course firstCourse = new Course("Java", 2022);
 
-    private static final Scanner USER_INPUT = new Scanner(System.in);
+    private final Scanner USER_INPUT = new Scanner(System.in);
 
     public Scanner getUserInput() {
         return USER_INPUT;
     }
 
-    private static final String NOTHING_FOUND =
+    private final String NOTHING_FOUND =
             """
-                    Sorry, nothing found...:(
-                    Let's try again""";
+                    Sorry, nothing found...
+                    Let's try again!!!""";
 
     public String getNothingFound() {
         return NOTHING_FOUND;
     }
 
-    private static final String OPTION_CHOICE =
+    private final String OPTION_CHOICE =
             """
                     If 'Yes' - input 1, if 'No' - input 0
                     Please, input appropriate number:""";
@@ -42,12 +46,15 @@ public class MainService {
         return OPTION_CHOICE;
     }
 
-    private static final String WRONG_FORMAT = "WRONG FORMAT!!! Please, try again!!!";
+    private final String WRONG_FORMAT = "WRONG FORMAT !!! Please, try again !!!";
 
+    public String getWrongFormat() {
+        return WRONG_FORMAT;
+    }
 
     public void finishProgram() {
-        System.out.println("That's all, thank you for attention, see you next time :)");
-        System.out.println("----------------------PROGRAM FINISHED-------------------");
+        System.out.println("That's all, thank you for attention, see you next time !!!");
+        System.out.println("---------------------PROGRAM FINISHED---------------------");
         System.exit(0);
     }
 
@@ -56,19 +63,19 @@ public class MainService {
         int startOption;
 
         while (true) {
-            System.out.println("Welcome to 'Online School' project!");
-            System.out.println("Would you like to continue?");
+
+            System.out.println("Welcome to 'Online School' project!\n" +
+                                                "Would you like to continue?");
             System.out.println(OPTION_CHOICE);
 
             startOption = USER_INPUT.nextInt();
 
-            if (startOption == 1) {
+            if (startOption == 1)
                 break;
-            } else if (startOption == 0) {
+            if (startOption == 0)
                 finishProgram();
-            } else {
+            else
                 System.out.println(NOTHING_FOUND);
-            }
         }
 
     }
@@ -125,29 +132,34 @@ public class MainService {
 
     public void initData() {
 
-        lectureRepository.add(new Lecture("Intro", firstCourse.getId()));
-        lectureRepository.add(new Lecture("Variables", firstCourse.getId()));
-        lectureRepository.add(new Lecture("Git", firstCourse.getId()));
-        lectureRepository.add(new Lecture("Methods", firstCourse.getId()));
-        lectureRepository.add(new Lecture("Arrays", firstCourse.getId()));
+        Lecture firstLecture = new Lecture("Intro", firstCourse.getId(), "First");
+        lectureRepository.add(firstLecture);
+        Lecture secondLecture = new Lecture("Variables", firstCourse.getId(), "Second");
+        lectureRepository.add(secondLecture);
+        Lecture thirdLecture = new Lecture("Git", firstCourse.getId(), "Third");
+        lectureRepository.add(thirdLecture);
+        Lecture fourthLecture = new Lecture("Methods", firstCourse.getId(), "Fourth");
+        lectureRepository.add(fourthLecture);
+        Lecture fifthLecture = new Lecture("Arrays", firstCourse.getId(), "Fifth");
+        lectureRepository.add(fifthLecture);
 
         System.out.println("We have already " + Lecture.getCounter() +
                 " lectures and " + Course.getCounter() + " course(s)");
 
         System.out.println("Here we go:");
         System.out.println(firstCourse);
-        System.out.println(Arrays.toString(lectureRepository.getAll()));
+        lectureRepository.getAll();
     }
 
     public void findLecture() {
 
-        int inputId;
+        int inputIndex;
         int choice;
 
         do {
-            System.out.println("Enter lecture id you want to find:");
-            inputId = USER_INPUT.nextInt();
-            lectureRepository.getById(inputId);
+            System.out.println("Enter lecture's index you want to find:");
+            inputIndex = USER_INPUT.nextInt();
+            lectureRepository.get(inputIndex);
             System.out.println("Would you like to find another lecture?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();
@@ -164,13 +176,13 @@ public class MainService {
 
     public void findTeacher() {
 
-        int inputId;
+        int inputIndex;
         int choice;
 
         do {
-            System.out.println("Enter teacher's id you want to find:");
-            inputId = USER_INPUT.nextInt();
-            teacherRepository.getById(inputId);
+            System.out.println("Enter teacher's index you want to find:");
+            inputIndex = USER_INPUT.nextInt();
+            teacherRepository.get(inputIndex);
             System.out.println("Would you like to find another teacher?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();
@@ -187,13 +199,13 @@ public class MainService {
 
     public void findStudent() {
 
-        int inputId;
+        int inputIndex;
         int choice;
 
         do {
-            System.out.println("Enter student's id you want to find:");
-            inputId = USER_INPUT.nextInt();
-            studentRepository.getById(inputId);
+            System.out.println("Enter student's index you want to find:");
+            inputIndex = USER_INPUT.nextInt();
+            studentRepository.get(inputIndex);
             System.out.println("Would you like to find another student?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();
@@ -210,15 +222,13 @@ public class MainService {
 
     public void deleteLecture() {
 
-        int inputId;
+        int inputIndex;
         int choice;
 
         do {
-            System.out.println("Enter lecture id you want to delete:");
-            inputId = USER_INPUT.nextInt();
-            lectureRepository.deleteById(inputId);
-            //lectureRepository.getAll();
-            System.out.println(Arrays.toString(lectureRepository.getAll()));
+            System.out.println("Enter lecture's index you want to delete:");
+            inputIndex = USER_INPUT.nextInt();
+            lectureRepository.remove(inputIndex);
             System.out.println("Would you like to delete another lecture?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();
@@ -235,13 +245,13 @@ public class MainService {
 
     public void deleteTeacher() {
 
-        int inputId;
+        int inputIndex;
         int choice;
 
         do {
-            System.out.println("Enter teacher's id you want to delete:");
-            inputId = USER_INPUT.nextInt();
-            teacherRepository.deleteById(inputId);
+            System.out.println("Enter teacher's index you want to delete:");
+            inputIndex = USER_INPUT.nextInt();
+            teacherRepository.remove(inputIndex);
             System.out.println("Would you like to delete another teacher?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();
@@ -258,13 +268,13 @@ public class MainService {
 
     public void deleteStudent() {
 
-        int inputId;
+        int inputIndex;
         int choice;
 
         do {
-            System.out.println("Enter student's id you want to delete:");
-            inputId = USER_INPUT.nextInt();
-            studentRepository.deleteById(inputId);
+            System.out.println("Enter student's index you want to delete:");
+            inputIndex = USER_INPUT.nextInt();
+            studentRepository.remove(inputIndex);
             System.out.println("Would you like to delete another student?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();
@@ -390,23 +400,23 @@ public class MainService {
         switch (chosenOption) {
             case 1:
                 System.out.println("You have selected 'create teacher' option!");
-                createTeacher();
+                personService.createNewTeacher();
                 break;
             case 2:
                 System.out.println("You have selected 'find teacher' option!");
-                findTeacher();
+                //findTeacher();
                 break;
             case 3:
                 System.out.println("You have selected 'delete teacher' option!");
-                deleteTeacher();
+                //deleteTeacher();
                 break;
             case 4:
                 System.out.println("You have selected 'add teacher to lecture' option!");
-                createTeacherAndAddToLecture();
+                //createTeacherAndAddToLecture();
                 break;
             case 5:
                 System.out.println("You have selected 'return to previous menu' option!");
-                selectCategory(chooseCategory());
+                //selectCategory(chooseCategory());
                 break;
             case 0:
                 System.out.println("You have selected 'finish program' option!");
@@ -422,195 +432,231 @@ public class MainService {
         switch (chosenOption) {
             case 1:
                 System.out.println("You have selected 'create student' option!");
-                createStudent();
+                //createStudent();
+                personService.createNewStudent();
                 break;
             case 2:
                 System.out.println("You have selected 'find student' option!");
-                findStudent();
+                //findStudent();
                 break;
             case 3:
                 System.out.println("You have selected 'delete student' option!");
-                deleteStudent();
+                //deleteStudent();
                 break;
             case 4:
                 System.out.println("You have selected 'return to previous menu' option!");
-                selectCategory(chooseCategory());
+                //selectCategory(chooseCategory());
                 break;
             case 0:
                 System.out.println("You have selected 'finish program' option!");
-                finishProgram();
+                //finishProgram();
                 break;
             default:
                 System.out.println(NOTHING_FOUND);
         }
     }
 
-    public void createTeacher() {
+//    public String assignTeacherFirstName() {
+//
+//        String teacherFirstName;
+//
+//        do {
+//            System.out.println("Enter teacher's first name (format like 'Valerii'):");
+//            teacherFirstName = USER_INPUT.next();
+//            checkName(teacherFirstName);
+//            if (!checkName(teacherFirstName))
+//                System.out.println(WRONG_FORMAT);
+//        } while (!checkName(teacherFirstName));
+//        //teacher.setFirstname(teacherFirstname);
+//        return teacherFirstName;
+//    }
 
-        int choice;
+//    public String assignTeacherLastName() {
+//
+//        String teacherLastname;
+//
+//        do {
+//            System.out.println("Enter teacher's lastname (format like 'Zaluzhnyi'):");
+//            teacherLastname = USER_INPUT.next();
+//            checkName(teacherLastname);
+//            if (!checkName(teacherLastname))
+//                System.out.println(WRONG_FORMAT);
+//        } while (!checkName(teacherLastname));
+//        //teacher.setLastname(teacherLastname);
+//        return teacherLastname;
+//    }
 
-        Person teacher = new Person();
-        teacher.setRole(Role.TEACHER);
+//    public void createTeacher() {
+//
+//        int choice;
+//
+//        Person teacher = new Person();
+//        teacher.setRole(Role.TEACHER);
+//
+//        do {
+//
+//            String teacherFirstname;
+//
+//            do {
+//                System.out.println("Enter teacher's first name (format like 'Valerii'):");
+//                teacherFirstname = USER_INPUT.next();
+//                checkName(teacherFirstname);
+//                if (!checkName(teacherFirstname))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkName(teacherFirstname));
+//
+//            //teacher.setFirstname(teacherFirstname);
+//
+//            String teacherLastname;
+//
+//            do {
+//                System.out.println("Enter teacher's lastname (format like 'Zaluzhnyi'):");
+//                teacherLastname = USER_INPUT.next();
+//                checkName(teacherLastname);
+//                if (!checkName(teacherLastname))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkName(teacherLastname));
+//
+//            //teacher.setLastname(teacherLastname);
+//
+//            String teacherPhone;
+//
+//            do {
+//                System.out.println("Enter teacher's phone (format like '+380XXXXXXXXX'):");
+//                teacherPhone = USER_INPUT.next();
+//                checkPhone(teacherPhone);
+//                if (!checkPhone(teacherPhone))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkPhone(teacherPhone));
+//
+//            teacher.setPhone(teacherPhone);
+//
+//            String teacherEmail;
+//
+//            do {
+//            System.out.println("Enter teacher's email:");
+//            teacherEmail = USER_INPUT.next();
+//                checkEmail(teacherEmail);
+//                if (!checkEmail(teacherEmail))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkEmail(teacherEmail));
+//
+//            teacher.setEmail(teacherEmail);
+//
+//            //Teacher teacher1 = new Teacher(teacherFirstname, teacherLastname, teacherPhone, teacherEmail, Role.TEACHER);
+//            //teacher = new Teacher(teacherFirstname, teacherLastname, teacherPhone, teacherEmail, Role.TEACHER);
+//            //teacherRepository.add(teacher1);
+//            //teacherRepository.add(teacher);
+//
+//            System.out.println("Congratulations! You have just created new teacher!");
+//            //System.out.println(teacher);
+//            //System.out.println(teacher1);
+//            //System.out.println(Arrays.toString(teacherRepository.getAll()));
+//            teacherRepository.getAll();
+//            System.out.println("Would you like to create another teacher?");
+//            System.out.println(OPTION_CHOICE);
+//            choice = USER_INPUT.nextInt();
+//
+//        } while (choice == 1);
+//
+//        if (choice == 0) {
+//            selectTeachersOption(chooseTeachersOption());
+//        } else {
+//            System.out.println(NOTHING_FOUND);
+//            selectTeachersOption(chooseTeachersOption());
+//        }
+//    }
 
-        do {
-
-            String teacherFirstname;
-
-            do {
-                System.out.println("Enter teacher's first name (format like 'Valerii'):");
-                teacherFirstname = USER_INPUT.next();
-                checkName(teacherFirstname);
-                if (!checkName(teacherFirstname))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkName(teacherFirstname));
-
-            teacher.setFirstname(teacherFirstname);
-
-            String teacherLastname;
-
-            do {
-                System.out.println("Enter teacher's lastname (format like 'Zaluzhnyi'):");
-                teacherLastname = USER_INPUT.next();
-                checkName(teacherLastname);
-                if (!checkName(teacherLastname))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkName(teacherLastname));
-
-            teacher.setLastname(teacherLastname);
-
-            String teacherPhone;
-
-            do {
-                System.out.println("Enter teacher's phone (format like '+380XXXXXXXXX'):");
-                teacherPhone = USER_INPUT.next();
-                checkPhone(teacherPhone);
-                if (!checkPhone(teacherPhone))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkPhone(teacherPhone));
-
-            teacher.setPhone(teacherPhone);
-
-            String teacherEmail;
-
-            do {
-            System.out.println("Enter teacher's email:");
-            teacherEmail = USER_INPUT.next();
-                checkEmail(teacherEmail);
-                if (!checkEmail(teacherEmail))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkEmail(teacherEmail));
-
-            teacher.setEmail(teacherEmail);
-
-            teacherRepository.add(teacher);
-
-            System.out.println("Congratulations! You have just created new teacher!");
-            System.out.println(teacher);
-            System.out.println(Arrays.toString(teacherRepository.getAll()));
-            System.out.println("Would you like to create another teacher?");
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
-
-        } while (choice == 1);
-
-        if (choice == 0) {
-            selectTeachersOption(chooseTeachersOption());
-        } else {
-            System.out.println(NOTHING_FOUND);
-            selectTeachersOption(chooseTeachersOption());
-        }
-    }
-
-    public void createTeacherAndAddToLecture() {
-
-        int choice;
-
-        Person teacher = new Person();
-        teacher.setRole(Role.TEACHER);
-
-        do {
-
-            String teacherFirstname;
-
-            do {
-                System.out.println("Enter teacher's first name (format like 'Valerii'):");
-                teacherFirstname = USER_INPUT.next();
-                checkName(teacherFirstname);
-                if (!checkName(teacherFirstname))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkName(teacherFirstname));
-
-            teacher.setFirstname(teacherFirstname);
-
-            String teacherLastname;
-
-            do {
-                System.out.println("Enter teacher's lastname (format like 'Zaluzhnyi'):");
-                teacherLastname = USER_INPUT.next();
-                checkName(teacherLastname);
-                if (!checkName(teacherLastname))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkName(teacherLastname));
-
-            teacher.setLastname(teacherLastname);
-
-            String teacherPhone;
-
-            do {
-                System.out.println("Enter teacher's phone (format like '+380XXXXXXXXX'):");
-                teacherPhone = USER_INPUT.next();
-                checkPhone(teacherPhone);
-                if (!checkPhone(teacherPhone))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkPhone(teacherPhone));
-
-            teacher.setPhone(teacherPhone);
-
-            String teacherEmail;
-
-            do {
-                System.out.println("Enter teacher's email:");
-                teacherEmail = USER_INPUT.next();
-                checkEmail(teacherEmail);
-                if (!checkEmail(teacherEmail))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkEmail(teacherEmail));
-
-            teacher.setEmail(teacherEmail);
-
-            teacherRepository.add(teacher);
-
-            System.out.println("Congratulations! You have just created new teacher!");
-            System.out.println(teacher);
-
-            String lectureName;
-
-            do {
-                System.out.println("Enter lecture name (format like 'Introduction'):");
-                lectureName = USER_INPUT.next();
-                checkName(lectureName);
-                if (!checkName(lectureName))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkName(lectureName));
-
-            System.out.println("Write down something into description:");
-            String description = USER_INPUT.next();
-            Lecture lecture = new Lecture(lectureName, firstCourse.getId(), description, teacher);
-            lectureRepository.add(lecture);
-            System.out.println("Congratulations! You have just added new teacher to a new lecture!");
-            System.out.println(lecture);
-            System.out.println("Would you like to repeat this action?");
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
-        } while (choice == 1);
-
-        if (choice == 0) {
-            selectTeachersOption(chooseTeachersOption());
-        } else {
-            System.out.println(NOTHING_FOUND);
-            selectTeachersOption(chooseTeachersOption());
-        }
-    }
+//    public void createTeacherAndAddToLecture() {
+//
+//        int choice;
+//
+//        Person teacher = new Person();
+//        teacher.setRole(Role.TEACHER);
+//
+//        do {
+//
+//            String teacherFirstname;
+//
+//            do {
+//                System.out.println("Enter teacher's first name (format like 'Valerii'):");
+//                teacherFirstname = USER_INPUT.next();
+//                checkName(teacherFirstname);
+//                if (!checkName(teacherFirstname))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkName(teacherFirstname));
+//
+//            teacher.setFirstname(teacherFirstname);
+//
+//            String teacherLastname;
+//
+//            do {
+//                System.out.println("Enter teacher's lastname (format like 'Zaluzhnyi'):");
+//                teacherLastname = USER_INPUT.next();
+//                checkName(teacherLastname);
+//                if (!checkName(teacherLastname))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkName(teacherLastname));
+//
+//            teacher.setLastname(teacherLastname);
+//
+//            String teacherPhone;
+//
+//            do {
+//                System.out.println("Enter teacher's phone (format like '+380XXXXXXXXX'):");
+//                teacherPhone = USER_INPUT.next();
+//                checkPhone(teacherPhone);
+//                if (!checkPhone(teacherPhone))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkPhone(teacherPhone));
+//
+//            teacher.setPhone(teacherPhone);
+//
+//            String teacherEmail;
+//
+//            do {
+//                System.out.println("Enter teacher's email:");
+//                teacherEmail = USER_INPUT.next();
+//                checkEmail(teacherEmail);
+//                if (!checkEmail(teacherEmail))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkEmail(teacherEmail));
+//
+//            teacher.setEmail(teacherEmail);
+//
+//            teacherRepository.add(teacher);
+//
+//            System.out.println("Congratulations! You have just created new teacher!");
+//            System.out.println(teacher);
+//
+//            String lectureName;
+//
+//            do {
+//                System.out.println("Enter lecture name (format like 'Introduction'):");
+//                lectureName = USER_INPUT.next();
+//                checkName(lectureName);
+//                if (!checkName(lectureName))
+//                    System.out.println(WRONG_FORMAT);
+//            } while (!checkName(lectureName));
+//
+//            System.out.println("Write down something into description:");
+//            String description = USER_INPUT.next();
+//            Lecture lecture = new Lecture(lectureName, firstCourse.getId(), description, teacher);
+//            lectureRepository.add(lecture);
+//            System.out.println("Congratulations! You have just added new teacher to a new lecture!");
+//            System.out.println(lecture);
+//            System.out.println("Would you like to repeat this action?");
+//            System.out.println(OPTION_CHOICE);
+//            choice = USER_INPUT.nextInt();
+//        } while (choice == 1);
+//
+//        if (choice == 0) {
+//            selectTeachersOption(chooseTeachersOption());
+//        } else {
+//            System.out.println(NOTHING_FOUND);
+//            selectTeachersOption(chooseTeachersOption());
+//        }
+//    }
 
     public void createStudent() {
 
@@ -658,14 +704,18 @@ public class MainService {
                     System.out.println(WRONG_FORMAT);
             } while (!checkEmail(studentEmail));
 
-            Person student = new Person(studentFirstname, studentLastname, studentPhone,
-                    studentEmail, Role.STUDENT);
+//            Person student = new Person(studentFirstname, studentLastname, studentPhone,
+//                    studentEmail, Role.STUDENT);
 
-            studentRepository.add(student);
+//            Person student1 = new Student(studentFirstname, studentLastname, studentPhone,
+//                    studentEmail, Role.STUDENT);
+
+            //studentRepository.add(student);
 
             System.out.println("Congratulations! You have just created new student!");
-            System.out.println(student);
-            System.out.println(Arrays.toString(studentRepository.getAll()));
+            //System.out.println(student);
+            //System.out.println(Arrays.toString(studentRepository.getAll()));
+            studentRepository.getAll();
 
             System.out.println("Would you like to create another student?");
             System.out.println(OPTION_CHOICE);
@@ -704,7 +754,7 @@ public class MainService {
             lectureRepository.add(lecture);
             System.out.println("Congratulations! You have just created new lecture!");
             System.out.println(lecture);
-            System.out.println(Arrays.toString(lectureRepository.getAll()));
+            lectureRepository.getAll();
             System.out.println("Would you like to create another lecture?");
             System.out.println(OPTION_CHOICE);
             choice = USER_INPUT.nextInt();

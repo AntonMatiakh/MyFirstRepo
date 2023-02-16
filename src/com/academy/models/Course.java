@@ -13,9 +13,9 @@ public class Course extends Model {
         counter++;
     }
 
-    public Course(String name) {
-        super(name, ++counter);
-    }
+//    public Course(String name) {
+//        super(name, ++counter);
+//    }
 
     public static int getCounter() {
         return counter;

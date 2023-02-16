@@ -32,7 +32,7 @@ public class Repository {
         modelsArray = increasedSizeArray;
     }
 
-    protected Model[] getAll() {
+    protected Model[] showAll() {
         for (Model m : modelsArray) {
             if (m == null) continue;
             System.out.println(m);

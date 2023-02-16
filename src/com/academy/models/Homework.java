@@ -13,9 +13,9 @@ public class Homework extends Model {
         super(name, ++counter, courseId);
     }
 
-    public Homework(String name) {
-        super(name, ++counter);
-    }
+//    public Homework(String name) {
+//        super(name, ++counter);
+//    }
 
     public static int getCounter() {
         return counter;

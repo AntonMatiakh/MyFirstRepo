@@ -3,15 +3,15 @@ package com.academy.models;
 public class Person extends Model {
 
     private static int counter;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String phone;
     private String email;
     private Role role;
 
     public Person(String firstname, String lastname, String phone, String email, Role role) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstname;
+        this.lastName = lastname;
         this.phone = phone;
         this.email = email;
         ++counter;
@@ -23,12 +23,12 @@ public class Person extends Model {
         counter++;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstname) {
+        this.firstName = firstname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
     public void setPhone(String phone) {
@@ -47,12 +47,12 @@ public class Person extends Model {
         return counter;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getPhone() {
@@ -83,12 +83,12 @@ public class Person extends Model {
     @Override
     public String toString() {
         return "Person{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname +
-                "', phone='" + phone +
-                "', email='" + email +
-                "', id=" + counter +
-                ", role=" + role +
+                " first name = '" + firstName + '\'' +
+                ", last name = '" + lastName +
+                "', phone number = '" + phone +
+                "', email address = '" + email +
+                "', id = " + counter +
+                ", role = " + role +
                 '}';
     }
 }

@@ -13,21 +13,35 @@ public class Teacher extends Model {
         super(name, ++counter, courseId);
     }
 
-    public Teacher(String name) {
-        super(name, ++counter);
-    }
+//    public Teacher(String name) {
+//        super(name, ++counter);
+//    }
+//
+//    public Teacher(String firstname, String lastname, String phone, String email, Role role) {
+//        super(firstname, lastname, phone, email, ++counter, role);
+//
+//
+//    }
+
+//    public Teacher() {}
 
     public static int getCounter() {
         return counter;
     }
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "name='" + super.getName() + '\'' +
-                ", id=" + super.getId() +
-                ", courseId=" + super.getCourseId() +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Teacher{" +
+//                "firstname='" + super.getFirstName() + '\'' +
+//                ", lastname='" + super.getLastName() +
+//                "', phone='" + super.getPhone() +
+//                "', email='" + super.getEmail() +
+//                "', id=" + super.getId() +
+//                //", courseId=" + super.getCourseId() +
+//                ", role=" + super.getRole() +
+//                '}';
+//    }
+
+
 
 }
