@@ -35,10 +35,6 @@ public class Lecture extends Model {
         this.person = person;
     }
 
-//    public Lecture(String name) {
-//        super(name, ++counter);
-//    }
-
     public static int getCounter() {
         return counter;
     }
@@ -67,14 +63,19 @@ public class Lecture extends Model {
         this.person = person;
     }
 
+    public Lecture addPersonToLecture(Person person, Lecture updatedLecture) {
+        this.person = person;
+        return updatedLecture;
+    }
+
     @Override
     public String toString() {
         return "Lecture{" +
-                "name='" + super.getName() + '\'' +
-                ", id=" + super.getId() +
-                ", courseID=" + super.getCourseId() +
-                ", description=" + description +
-                ", person=" + person +
+                "name = '" + super.getName() + '\'' +
+                ", id = " + super.getId() +
+                ", courseID = " + super.getCourseId() +
+                ", description = '" + description +
+                "', person = " + person +
                 '}';
     }
 }

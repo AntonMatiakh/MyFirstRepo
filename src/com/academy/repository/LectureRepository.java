@@ -131,6 +131,7 @@ public class LectureRepository extends General <Lecture> {
     public Lecture[] getAll() {
 
         System.out.println("Now we have next lectures:");
+        System.out.println();
 
         for (Lecture lecture : lectures) {
 
@@ -141,27 +142,27 @@ public class LectureRepository extends General <Lecture> {
         return lectures;
     }
 
-//    @Override
-//    public void getById(int inputId) {
-//
-//        if (inputId <= 0)
-//            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
-//        else if (inputId > Lecture.getCounter())
-//            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
-//       else super.getById(inputId);
-//
-//    }
+    @Override
+    public void getById(int inputId) {
 
-//    @Override
-//    public void deleteById(int inputId) {
-//
-//        if (inputId <= 0)
-//            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
-//        else if (inputId > Lecture.getCounter())
-//            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
-//        else super.deleteById(inputId);
-//
-//    }
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
+        else if (inputId > Lecture.getCounter())
+            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
+       else super.getById(inputId);
+
+    }
+
+    @Override
+    public void deleteById(int inputId) {
+
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
+        else if (inputId > Lecture.getCounter())
+            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
+        else super.deleteById(inputId);
+
+    }
 
     @Override
     public String toString() {

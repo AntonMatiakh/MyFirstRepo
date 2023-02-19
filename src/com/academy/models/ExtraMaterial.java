@@ -13,10 +13,6 @@ public class ExtraMaterial extends Model {
         super(name, ++counter, courseId);
     }
 
-//    public ExtraMaterial(String name) {
-//        super(name, ++counter);
-//    }
-
     public static int getCounter() {
         return counter;
     }

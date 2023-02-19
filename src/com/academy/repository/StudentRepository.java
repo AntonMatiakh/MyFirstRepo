@@ -127,33 +127,22 @@ public class StudentRepository extends General <Student> {
         return students;
     }
 
-//    @Override
-//    public void add(Model model) {
-//        super.add(model);
-//    }
+    @Override
+    public void getById(int inputId) {
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Student's id must be > 0 !!!");
+        else if (inputId > Student.getCounter())
+            System.out.println("Sorry, student with id=" + inputId + " doesn't exist!");
+        else super.getById(inputId);
+    }
 
-//    @Override
-//    public void getById(int inputId) {
-//        if (inputId <= 0)
-//            System.out.println("WRONG ARGUMENT!!! Student's id must be > 0 !!!");
-//        else if (inputId > Student.getCounter())
-//            System.out.println("Sorry, student with id=" + inputId + " doesn't exist!");
-//        else super.getById(inputId);
-//    }
-
-//    @Override
-//    public void deleteById(int inputId) {
-//        if (inputId <= 0)
-//            System.out.println("WRONG ARGUMENT!!! Student's id must be > 0 !!!");
-//        else if (inputId > Student.getCounter())
-//            System.out.println("Sorry, student with id=" + inputId + " doesn't exist!");
-//        else super.deleteById(inputId);
-//    }
-
-//    @Override
-//    public Model[] showAll() {
-//        System.out.println("Now we have next students:");
-//        return super.showAll();
-//    }
+    @Override
+    public void deleteById(int inputId) {
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Student's id must be > 0 !!!");
+        else if (inputId > Student.getCounter())
+            System.out.println("Sorry, student with id=" + inputId + " doesn't exist!");
+        else super.deleteById(inputId);
+    }
 
 }

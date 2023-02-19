@@ -1,8 +1,5 @@
 package com.academy.repository;
 
-import com.academy.models.Model;
-import com.academy.models.Person;
-import com.academy.models.Student;
 import com.academy.models.Teacher;
 
 public class TeacherRepository extends General <Teacher> {
@@ -129,32 +126,22 @@ public class TeacherRepository extends General <Teacher> {
         return teachers;
     }
 
-//    @Override
-//    public void add(Model model) {
-//        super.add(model);
-//    }
+    @Override
+    public void getById(int inputId) {
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Teacher's id must be > 0 !!!");
+        else if (inputId > Teacher.getCounter())
+            System.out.println("Sorry, teacher with id=" + inputId + " doesn't exist!");
+        else super.getById(inputId);
+    }
 
-//    @Override
-//    public void getById(int inputId) {
-//        if (inputId <= 0)
-//            System.out.println("WRONG ARGUMENT!!! Teacher's id must be > 0 !!!");
-//        else if (inputId > Teacher.getCounter())
-//            System.out.println("Sorry, teacher with id=" + inputId + " doesn't exist!");
-//        else super.getById(inputId);
-//    }
+    @Override
+    public void deleteById(int inputId) {
+        if (inputId <= 0)
+            System.out.println("WRONG ARGUMENT!!! Teacher's id must be > 0 !!!");
+        else if (inputId > Teacher.getCounter())
+            System.out.println("Sorry, teacher with id=" + inputId + " doesn't exist!");
+        else super.deleteById(inputId);
+    }
 
-//    @Override
-//    public void deleteById(int inputId) {
-//        if (inputId <= 0)
-//            System.out.println("WRONG ARGUMENT!!! Teacher's id must be > 0 !!!");
-//        else if (inputId > Teacher.getCounter())
-//            System.out.println("Sorry, teacher with id=" + inputId + " doesn't exist!");
-//        else super.deleteById(inputId);
-//    }
-
-//    @Override
-//    public Model[] showAll() {
-//        System.out.println("Now we have next teachers:");
-//        return super.showAll();
-//    }
 }

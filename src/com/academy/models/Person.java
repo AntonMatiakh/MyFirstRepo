@@ -10,12 +10,14 @@ public class Person extends Model {
     private Role role;
 
     public Person(String firstname, String lastname, String phone, String email, Role role) {
+
+        super(++counter);
         this.firstName = firstname;
         this.lastName = lastname;
         this.phone = phone;
         this.email = email;
-        ++counter;
         this.role = role;
+
     }
 
     public Person() {
@@ -87,7 +89,7 @@ public class Person extends Model {
                 ", last name = '" + lastName +
                 "', phone number = '" + phone +
                 "', email address = '" + email +
-                "', id = " + counter +
+                "', id = " + super.getId() +
                 ", role = " + role +
                 '}';
     }

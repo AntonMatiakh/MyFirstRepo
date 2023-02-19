@@ -13,10 +13,6 @@ public class Student extends Model {
         super(name, ++counter, courseId);
     }
 
-//    public Student(String name) {
-//        super(name, ++counter);
-//    }
-
     public static int getCounter() {
         return counter;
     }

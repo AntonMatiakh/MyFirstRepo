@@ -8,6 +8,10 @@ public class Main {
 
         mainService.welcomeTo();
 
+        mainService.initLectureData();
+        mainService.initTeacherData();
+        mainService.initStudentData();
+
         mainService.selectCategory(mainService.chooseCategory());
 
     }
