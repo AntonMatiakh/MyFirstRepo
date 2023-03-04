@@ -1,6 +1,9 @@
 package com.academy.models;
 
 public class Lecture extends Model {
+
+    private Homework[] homeworks;
+
     private static int counter;
 
     private int personId;
@@ -78,4 +81,5 @@ public class Lecture extends Model {
                 "', person = " + person +
                 '}';
     }
+
 }

@@ -1,118 +1,30 @@
 package com.academy.repository;
 
-import java.util.Arrays;
+import com.academy.models.Model;
 
-public class General <E> extends Repository {
+public abstract class General <E extends Model> implements RepositoryInterface <Model>{
 
     private E[] storage;
 
-    public General(){
-        this.storage = (E[]) new Object[5];
-    }
+    public abstract int size();
 
-    public E[] getStorage() {
-        return storage;
-    }
+    public abstract boolean isEmpty();
 
-    public int size() {
-        return storage.length;
-    }
+    public abstract E get (int index);
 
-    public E get (int index) {
+    public abstract void add(Model element);
 
-        E elementToShow = null;
+    public abstract void add(int index, Model element);
 
-        for (E element : storage) {
+    public abstract void remove(int index);
 
-            if (element == null)
-                continue;
+    public abstract void getAll();
 
-            elementToShow = storage[index];
-            break;
-        }
-        return elementToShow;
-    }
+    public abstract void increaseStorageSize();
 
+    public abstract void getById(int inputId);
 
-    public void add(E element) {
-        for (int i = 0; i < storage.length; i++) {
-
-            if (storage[i] == null) {
-                storage[i] = element;
-                break;
-            }
-            if (i == storage.length - 1) {
-                increaseStorageSize();
-            }
-        }
-    }
-
-    protected void increaseStorageSize() {
-        int newSize = (storage.length * 3) / 2 + 1;
-        Object[] increasedSizeStorage = new Object[newSize];
-        System.arraycopy(storage, 0, increasedSizeStorage, 0, storage.length);
-        storage = (E[]) increasedSizeStorage;
-    }
-
-    protected boolean isEmpty() {
-
-        boolean result = true;
-
-        for (E element : storage) {
-
-            if (element != null) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-    protected void remove(int index) {
-
-        Object[] result = new Object[storage.length - 1];
-
-        for (E element : storage) {
-            if (element == null)
-                continue;
-            if (element == storage[index])
-                System.out.println("You have just deleted:\n" + element);
-        }
-
-        System.arraycopy(storage, 0, result, 0, index);
-        System.out.println("Result: " + Arrays.toString(result));
-        System.arraycopy(storage, index + 1, result, index, storage.length - index - 1);
-        storage = (E[]) result;
-    }
-
-    protected void add(int index, E elem) {
-
-        Object[] result = new Object[storage.length + 1];
-
-        System.arraycopy(storage, 0, result, 0, index);
-        System.arraycopy(storage, index, result, index + 1, storage.length - index);
-        result[index] = elem;
-        storage = (E[]) result;
-        getAll();
-    }
-
-    protected E[] getAll() {
-
-        for (E element : storage) {
-
-            if (element == null)
-                continue;
-            System.out.println(element);
-        }
-        return storage;
-    }
-
-    @Override
-    public String toString() {
-        return "General{" +
-                "storage=" + Arrays.toString(storage) +
-                '}';
-    }
+    public abstract void deleteById(int inputId);
 
 }
 

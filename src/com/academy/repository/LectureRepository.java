@@ -1,8 +1,11 @@
 package com.academy.repository;
 
 import com.academy.models.Lecture;
+import com.academy.models.Model;
 
 import java.util.Arrays;
+
+import static com.academy.repository.Repository.getSTANDARD_INITIAL_SIZE;
 
 public class LectureRepository extends General <Lecture> {
 
@@ -12,78 +15,9 @@ public class LectureRepository extends General <Lecture> {
         this.lectures = new Lecture[getSTANDARD_INITIAL_SIZE()];
     }
 
-    public Lecture[] getLectures() {
-        return lectures;
-    }
-
-    public LectureRepository(int inputSize) {
-        if (inputSize < 1) {
-            System.out.println("WRONG ARGUMENT, CREATING STANDARD SIZED ARRAY");
-            this.lectures = new Lecture[getSTANDARD_INITIAL_SIZE()];
-        } else {
-            this.lectures = new Lecture[inputSize];
-        }
-    }
-
     @Override
     public int size() {
         return lectures.length;
-    }
-
-    @Override
-    public void add(Lecture lecture) {
-        for (int i = 0; i < lectures.length; i++) {
-
-            if (lectures[i] == null) {
-                lectures[i] = lecture;
-                break;
-            }
-            if (i == lectures.length - 1) {
-                increaseStorageSize();
-            }
-        }
-    }
-
-    @Override
-    public void add(int index, Lecture lecture) {
-
-        Lecture[] result = new Lecture[lectures.length + 1];
-        System.arraycopy(lectures, 0, result, 0, index);
-        System.arraycopy(lectures, index, result, index + 1, lectures.length - index);
-        result[index] = lecture;
-        lectures = result;
-        getAll();
-    }
-
-    @Override
-    public void increaseStorageSize() {
-        int newSize = (lectures.length * 3) / 2 + 1;
-        Lecture[] increasedSizeStorage = new Lecture[newSize];
-        System.arraycopy(lectures, 0, increasedSizeStorage, 0, lectures.length);
-        lectures = increasedSizeStorage;
-    }
-
-    @Override
-    public Lecture get(int index) {
-
-        Lecture detectedLecture = null;
-
-        if (index < 0)
-            System.out.println("WRONG ARGUMENT!!! Index can't be < 0 !!!");
-        else if (index >= Lecture.getCounter())
-            System.out.println("Sorry, lecture with index=" + index + " doesn't exist!");
-        else {
-            for (Lecture lecture : lectures) {
-
-                if (lecture == null)
-                    continue;
-
-                detectedLecture = lectures[index];
-                System.out.println("We have found next lecture:\n" + detectedLecture);
-                break;
-            }
-        }
-        return detectedLecture;
     }
 
     @Override
@@ -102,12 +36,36 @@ public class LectureRepository extends General <Lecture> {
     }
 
     @Override
+    public Lecture get(int index) {
+
+        Lecture detectedLecture = null;
+
+        if (index < 0 || index >= lectures.length)
+
+            System.out.println("Sorry, nothing found...");
+
+        else {
+
+            for (Lecture lecture : lectures) {
+
+                if (lecture == null)
+                    continue;
+
+                detectedLecture = lectures[index];
+                System.out.println("We have found next lecture:\n" + detectedLecture);
+                break;
+            }
+        }
+        return detectedLecture;
+    }
+
+    @Override
     public void remove(int index) {
 
-        if (index < 0)
-            System.out.println("WRONG ARGUMENT!!! Index can't be < 0 !!!");
-        else if (index >= Lecture.getCounter())
-            System.out.println("Sorry, lecture with index=" + index + " doesn't exist!");
+        if (index < 0 || index >= lectures.length)
+
+            System.out.println("Sorry, nothing found...");
+
         else {
 
             Lecture[] result = new Lecture[lectures.length - 1];
@@ -128,10 +86,43 @@ public class LectureRepository extends General <Lecture> {
     }
 
     @Override
-    public Lecture[] getAll() {
+    public void add(Model lecture) {
+
+        for (int i = 0; i < lectures.length; i++) {
+
+            if (lectures[i] == null) {
+                lectures[i] = (Lecture) lecture;
+                break;
+            }
+            if (i == lectures.length - 1) {
+                increaseStorageSize();
+            }
+        }
+    }
+
+    @Override
+    public void increaseStorageSize() {
+        int newSize = (lectures.length * 3) / 2 + 1;
+        Lecture[] increasedSizeStorage = new Lecture[newSize];
+        System.arraycopy(lectures, 0, increasedSizeStorage, 0, lectures.length);
+        lectures = increasedSizeStorage;
+    }
+    
+    @Override
+    public void add(int index, Model lecture) {
+
+        Lecture[] result = new Lecture[lectures.length + 1];
+        System.arraycopy(lectures, 0, result, 0, index);
+        System.arraycopy(lectures, index, result, index + 1, lectures.length - index);
+        result[index] = (Lecture) lecture;
+        lectures = result;
+        getAll();
+    }
+
+    @Override
+    public void getAll() {
 
         System.out.println("Now we have next lectures:");
-        System.out.println();
 
         for (Lecture lecture : lectures) {
 
@@ -139,35 +130,58 @@ public class LectureRepository extends General <Lecture> {
                 continue;
             System.out.println(lecture);
         }
-        return lectures;
     }
 
     @Override
     public void getById(int inputId) {
 
-        if (inputId <= 0)
-            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
-        else if (inputId > Lecture.getCounter())
-            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
-       else super.getById(inputId);
+        if (inputId <= 0 || inputId > lectures.length)
 
+            System.out.println("Sorry, nothing found...");
+
+        else {
+
+            for (Lecture lecture : lectures) {
+
+                if (lecture == null)
+                    continue;
+                if (lecture.getId() == inputId) {
+                    System.out.println("We have just found nex lecture: " + lecture);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void deleteById(int inputId) {
 
-        if (inputId <= 0)
-            System.out.println("WRONG ARGUMENT!!! Lecture's id must be > 0 !!!");
-        else if (inputId > Lecture.getCounter())
-            System.out.println("Sorry, lecture with id=" + inputId + " doesn't exist!");
-        else super.deleteById(inputId);
+        if (inputId <= 0 || inputId > lectures.length)
 
+            System.out.println("Sorry, nothing found...");
+
+        else {
+
+            Lecture[] result = new Lecture[lectures.length - 1];
+            int index = inputId - 1;
+
+            for (Lecture lecture : lectures) {
+                if (lecture == null)
+                    continue;
+                if (lecture.getId() == inputId)
+                    System.out.println("You have just deleted:\n" + lecture);
+            }
+
+            System.arraycopy(lectures, 0, result, 0, index);
+            System.arraycopy(lectures, index + 1, result, index, lectures.length - index - 1);
+            lectures = result;
+        }
     }
 
     @Override
     public String toString() {
         return "LectureRepository{" +
-                "lectures=" + Arrays.toString(modelsArray) +
+                "lectures=" + Arrays.toString(lectures) +
                 '}';
     }
 

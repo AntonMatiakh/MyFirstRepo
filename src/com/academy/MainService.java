@@ -3,8 +3,6 @@ package com.academy;
 import com.academy.models.*;
 import com.academy.repository.LectureRepository;
 import com.academy.repository.PersonRepository;
-import com.academy.repository.StudentRepository;
-import com.academy.repository.TeacherRepository;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -38,6 +36,48 @@ public class MainService {
         System.exit(0);
     }
 
+    public int repeatLectureAction() {
+
+        System.out.println(OPTION_CHOICE);
+        int choice = USER_INPUT.nextInt();
+
+        if (choice == 0)
+            selectLecturesOption(chooseLecturesOption());
+        else if (choice != 1) {
+            System.out.println(NOTHING_FOUND);
+            selectLecturesOption(chooseLecturesOption());
+        }
+        return choice;
+    }
+
+    public int repeatStudentAction() {
+
+        System.out.println(OPTION_CHOICE);
+        int choice = USER_INPUT.nextInt();
+
+        if (choice == 0)
+            selectStudentsOption(chooseStudentsOption());
+        else if (choice != 1) {
+            System.out.println(NOTHING_FOUND);
+            selectStudentsOption(chooseStudentsOption());
+        }
+        return choice;
+    }
+
+    public int repeatTeacherAction() {
+
+        System.out.println(OPTION_CHOICE);
+        int choice = USER_INPUT.nextInt();
+
+        if (choice == 0) {
+            selectTeachersOption(chooseTeachersOption());
+        } else if (choice != 1) {
+            System.out.println(NOTHING_FOUND);
+            selectTeachersOption(chooseTeachersOption());
+        }
+        return choice;
+    }
+
     public void welcomeTo() {
 
         int startOption;
@@ -45,7 +85,7 @@ public class MainService {
         while (true) {
 
             System.out.println("Welcome to 'Online School' project!\n" +
-                                                "Would you like to continue?");
+                    "Would you like to continue?");
             System.out.println(OPTION_CHOICE);
 
             startOption = USER_INPUT.nextInt();
@@ -66,14 +106,14 @@ public class MainService {
 
         do {
             System.out.println("""
-            We have the following categories:
-            
-            1. - Lectures
-            2. - Teachers
-            3. - Students
-            4. - Courses
-            
-            Please, select necessary category and input appropriate number:""");
+                    We have the following categories:
+                                
+                    1. - Lectures
+                    2. - Teachers
+                    3. - Students
+                    4. - Courses
+                                
+                    Please, select necessary category and input appropriate number:""");
 
             category = USER_INPUT.nextInt();
 
@@ -84,7 +124,6 @@ public class MainService {
         } while (category < 1 || category > 4);
 
         return category;
-
     }
 
     public void selectCategory(int category) {
@@ -92,19 +131,16 @@ public class MainService {
         switch (category) {
             case 1:
                 System.out.println("You have selected 'Lectures' category!");
-                System.out.println();
                 lectureRepository.getAll();
                 selectLecturesOption(chooseLecturesOption());
                 break;
             case 2:
                 System.out.println("You have selected 'Teachers' category!");
-                System.out.println();
                 personRepository.getAllTeachers();
                 selectTeachersOption(chooseTeachersOption());
                 break;
             case 3:
                 System.out.println("You have selected 'Students' category!");
-                System.out.println();
                 personRepository.getAllStudents();
                 selectStudentsOption(chooseStudentsOption());
                 break;
@@ -165,152 +201,80 @@ public class MainService {
 
     public void findLecture() {
 
-        int inputIndex;
-        int choice;
+        System.out.println("Enter lecture's index you want to find:");
 
-        do {
-            System.out.println("Enter lecture's index you want to find:");
-            inputIndex = USER_INPUT.nextInt();
-            lectureRepository.get(inputIndex);
-            System.out.println();
-            System.out.println("Would you like to find another lecture?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        int inputIndex = USER_INPUT.nextInt();
+        lectureRepository.get(inputIndex);
 
-            if (choice == 0) {
-                selectLecturesOption(chooseLecturesOption());
-            } else if (choice != 1) {
-                System.out.println(NOTHING_FOUND);
-                selectLecturesOption(chooseLecturesOption());
-            }
+        System.out.println("Would you like to find another lecture?");
 
-        } while (choice == 1);
+        if (repeatLectureAction() == 1)
+            findLecture();
     }
 
     public void findTeacher() {
 
-        int inputIndex;
-        int choice;
+        System.out.println("Enter teacher's index you want to find:");
 
-        do {
-            System.out.println("Enter teacher's index you want to find:");
-            inputIndex = USER_INPUT.nextInt();
-            personRepository.getTeacher(inputIndex);
-            System.out.println();
-            System.out.println("Would you like to find another teacher?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        int inputIndex = USER_INPUT.nextInt();
+        personRepository.getTeacher(inputIndex);
 
-            if (choice == 0) {
-                selectTeachersOption(chooseTeachersOption());
-            } else if (choice != 1) {
-                System.out.println(NOTHING_FOUND);
-                selectTeachersOption(chooseTeachersOption());
-            }
+        System.out.println("Would you like to find another teacher?");
 
-        } while (choice == 1);
+        if (repeatTeacherAction() == 1)
+            findTeacher();
     }
 
     public void findStudent() {
 
-        int inputIndex;
-        int choice;
+        System.out.println("Enter student's index you want to find:");
 
-        do {
-            System.out.println("Enter student's index you want to find:");
-            inputIndex = USER_INPUT.nextInt();
-            personRepository.getStudent(inputIndex);
-            System.out.println();
-            System.out.println("Would you like to find another student?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        int inputIndex = USER_INPUT.nextInt();
+        personRepository.getStudent(inputIndex);
 
-            if (choice == 0) {
-                selectStudentsOption(chooseStudentsOption());
-            } else if (choice != 1) {
-                System.out.println(NOTHING_FOUND);
-                selectStudentsOption(chooseStudentsOption());
-            }
+        System.out.println("Would you like to find another student?");
 
-        } while (choice == 1);
+        if (repeatStudentAction() == 1)
+            findStudent();
     }
 
     public void deleteLecture() {
 
-        int inputIndex;
-        int choice;
+        System.out.println("Enter lecture's index you want to delete:");
 
-        do {
-            System.out.println("Enter lecture's index you want to delete:");
-            inputIndex = USER_INPUT.nextInt();
-            lectureRepository.remove(inputIndex);
-            System.out.println();
-            System.out.println("Would you like to delete another lecture?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        int inputIndex = USER_INPUT.nextInt();
+        lectureRepository.remove(inputIndex);
 
-            if (choice == 0) {
-                selectLecturesOption(chooseLecturesOption());
-            } else if (choice != 1) {
-                System.out.println(NOTHING_FOUND);
-                selectLecturesOption(chooseLecturesOption());
-            }
+        System.out.println("Would you like to delete another lecture?");
 
-        } while (choice == 1);
+        if (repeatLectureAction() == 1)
+            deleteLecture();
     }
 
     public void deleteTeacher() {
 
-        int inputIndex;
-        int choice;
+        System.out.println("Enter teacher's index you want to delete:");
 
-        do {
-            System.out.println("Enter teacher's index you want to delete:");
-            inputIndex = USER_INPUT.nextInt();
-            personRepository.removeTeacher(inputIndex);
-            System.out.println();
-            System.out.println("Would you like to delete another teacher?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        int inputIndex = USER_INPUT.nextInt();
+        personRepository.removeTeacher(inputIndex);
 
-            if (choice == 0) {
-                selectTeachersOption(chooseTeachersOption());
-            } else if (choice != 1) {
-                System.out.println(NOTHING_FOUND);
-                selectTeachersOption(chooseTeachersOption());
-            }
+        System.out.println("Would you like to delete another teacher?");
 
-        } while (choice == 1);
+        if (repeatTeacherAction() == 1)
+            deleteTeacher();
     }
 
     public void deleteStudent() {
 
-        int inputIndex;
-        int choice;
+        System.out.println("Enter student's index you want to delete:");
 
-        do {
-            System.out.println("Enter student's index you want to delete:");
-            inputIndex = USER_INPUT.nextInt();
-            personRepository.removeStudent(inputIndex);
-            System.out.println();
-            System.out.println("Would you like to delete another student?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        int inputIndex = USER_INPUT.nextInt();
+        personRepository.removeStudent(inputIndex);
 
-            if (choice == 0) {
-                selectStudentsOption(chooseStudentsOption());
-            } else if (choice != 1) {
-                System.out.println(NOTHING_FOUND);
-                selectStudentsOption(chooseStudentsOption());
-            }
+        System.out.println("Would you like to delete another student?");
 
-        } while (choice == 1);
+        if (repeatStudentAction() == 1)
+            deleteStudent();
     }
 
     public int chooseLecturesOption() {
@@ -319,15 +283,15 @@ public class MainService {
 
         do {
             System.out.println("""
-                    
+                                        
                     We have next options to choose:
-                    
+                                        
                     1. - create new lecture
                     2. - find lecture
                     3. - delete lecture
                     4. - return to previous menu
                     0. - finish program
-                    
+                                        
                     Please, input appropriate number:""");
 
             chosenOption = USER_INPUT.nextInt();
@@ -347,16 +311,16 @@ public class MainService {
 
         do {
             System.out.println("""
-                    
+                                        
                     We have next options to choose:
-                    
+                                        
                     1. - create new teacher
                     2. - find teacher
                     3. - delete teacher
                     4. - add teacher to lecture
                     5. - return to previous menu
                     0. - finish program
-                    
+                                        
                     Please, input appropriate number:""");
 
             chosenOption = USER_INPUT.nextInt();
@@ -376,15 +340,15 @@ public class MainService {
 
         do {
             System.out.println("""
-                    
+                                        
                     We have next options to choose:
-                    
+                                        
                     1. - create new student
                     2. - find student
                     3. - delete student
                     4. - return to previous menu
                     0. - finish program
-                    
+                                        
                     Please, input appropriate number:""");
 
             chosenOption = USER_INPUT.nextInt();
@@ -403,27 +367,22 @@ public class MainService {
         switch (chosenOption) {
             case 1:
                 System.out.println("You have selected 'create new lecture' option!");
-                System.out.println();
                 createNewLecture();
                 break;
             case 2:
                 System.out.println("You have selected 'find lecture' option!");
-                System.out.println();
                 findLecture();
                 break;
             case 3:
                 System.out.println("You have selected 'delete lecture' option!");
-                System.out.println();
                 deleteLecture();
                 break;
             case 4:
                 System.out.println("You have selected 'return to previous menu' option!");
-                System.out.println();
                 selectCategory(chooseCategory());
                 break;
             case 0:
                 System.out.println("You have selected 'finish program' option!");
-                System.out.println();
                 finishProgram();
                 break;
             default:
@@ -436,32 +395,26 @@ public class MainService {
         switch (chosenOption) {
             case 1:
                 System.out.println("You have selected 'create new teacher' option!");
-                System.out.println();
                 createNewTeacher();
                 break;
             case 2:
                 System.out.println("You have selected 'find teacher' option!");
-                System.out.println();
                 findTeacher();
                 break;
             case 3:
                 System.out.println("You have selected 'delete teacher' option!");
-                System.out.println();
                 deleteTeacher();
                 break;
             case 4:
                 System.out.println("You have selected 'add teacher to lecture' option!");
-                System.out.println();
                 addTeacherToLecture();
                 break;
             case 5:
                 System.out.println("You have selected 'return to previous menu' option!");
-                System.out.println();
                 selectCategory(chooseCategory());
                 break;
             case 0:
                 System.out.println("You have selected 'finish program' option!");
-                System.out.println();
                 finishProgram();
                 break;
             default:
@@ -474,27 +427,22 @@ public class MainService {
         switch (chosenOption) {
             case 1:
                 System.out.println("You have selected 'create student' option!");
-                System.out.println();
                 createNewStudent();
                 break;
             case 2:
                 System.out.println("You have selected 'find student' option!");
-                System.out.println();
                 findStudent();
                 break;
             case 3:
                 System.out.println("You have selected 'delete student' option!");
-                System.out.println();
                 deleteStudent();
                 break;
             case 4:
                 System.out.println("You have selected 'return to previous menu' option!");
-                System.out.println();
                 selectCategory(chooseCategory());
                 break;
             case 0:
                 System.out.println("You have selected 'finish program' option!");
-                System.out.println();
                 finishProgram();
                 break;
             default:
@@ -504,49 +452,35 @@ public class MainService {
 
     public void addTeacherToLecture() {
 
-        int choice;
         int teacherIndex;
         int lectureIndex;
         Person requiredTeacher;
         Lecture requiredLecture;
         Lecture updatedLecture;
 
-        do {
+        personRepository.getAllTeachers();
 
-            personRepository.getAllTeachers();
+        System.out.println("Enter teacher's index you want to add:");
 
-            System.out.println();
-            System.out.println("Enter teacher's index you want to add:");
-            teacherIndex = USER_INPUT.nextInt();
-            requiredTeacher = personRepository.getTeacher(teacherIndex);
-            System.out.println();
+        teacherIndex = USER_INPUT.nextInt();
+        requiredTeacher = personRepository.getTeacher(teacherIndex);
 
-            lectureRepository.getAll();
+        lectureRepository.getAll();
 
-            System.out.println();
-            System.out.println("Enter lecture's index you want to add teacher to:");
-            lectureIndex = USER_INPUT.nextInt();
-            requiredLecture = lectureRepository.get(lectureIndex);
-            System.out.println();
+        System.out.println("Enter lecture's index you want to add teacher to:");
 
-            updatedLecture = requiredLecture.addPersonToLecture(requiredTeacher, requiredLecture);
+        lectureIndex = USER_INPUT.nextInt();
+        requiredLecture = lectureRepository.get(lectureIndex);
 
-            System.out.println("Congratulations, you have just added teacher to lecture! " +
-                    "Now we have:\n" + updatedLecture);
-            System.out.println();
-            System.out.println("Would you like to repeat this action?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        updatedLecture = requiredLecture.addPersonToLecture(requiredTeacher, requiredLecture);
 
-        } while (choice == 1);
+        System.out.println("Congratulations, you have just added teacher to lecture! " +
+                "Now we have:\n" + updatedLecture);
 
-        if (choice == 0) {
-            selectTeachersOption(chooseTeachersOption());
-        } else {
-            System.out.println(NOTHING_FOUND);
-            selectTeachersOption(chooseTeachersOption());
-        }
+        System.out.println("Would you like to repeat this action?");
+
+        if (repeatTeacherAction() == 1)
+            addTeacherToLecture();
     }
 
     public String assignFirstName() {
@@ -562,7 +496,6 @@ public class MainService {
         } while (!checkName(firstName));
 
         System.out.println("First name: " + firstName);
-        System.out.println();
         return firstName;
     }
 
@@ -585,7 +518,6 @@ public class MainService {
         } while (!checkName(lastName));
 
         System.out.println("Last name: " + lastName);
-        System.out.println();
         return lastName;
     }
 
@@ -602,7 +534,6 @@ public class MainService {
         } while (!checkPhone(phone));
 
         System.out.println("Phone number: " + phone);
-        System.out.println();
         return phone;
     }
 
@@ -625,7 +556,6 @@ public class MainService {
         } while (!checkEmail(email));
 
         System.out.println("Email address: " + email);
-        System.out.println();
         return email;
     }
 
@@ -637,100 +567,64 @@ public class MainService {
 
     public Person createNewTeacher() {
 
-        int choice;
-        Person teacher;
+        Person teacher = new Person(assignFirstName(), assignLastName(), assignPhone(), assignEmail(), Role.TEACHER);
+        personRepository.add(teacher);
 
-        do {
+        System.out.println("Congratulations! You have just created new teacher:\n" + teacher);
 
-            teacher = new Person(assignFirstName(), assignLastName(), assignPhone(), assignEmail(), Role.TEACHER);
-            personRepository.add(teacher);
-            System.out.println("Congratulations! You have just created new teacher:\n" + teacher);
-            System.out.println();
-            personRepository.getAllTeachers();
-            System.out.println();
-            System.out.println("Would you like to create another teacher?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        personRepository.getAllTeachers();
 
-        } while (choice == 1);
+        System.out.println("Would you like to create another teacher?");
 
-        if (choice == 0) {
-            selectTeachersOption(chooseTeachersOption());
-        } else {
-            System.out.println(NOTHING_FOUND);
-            selectTeachersOption(chooseTeachersOption());
-        }
+        if (repeatTeacherAction() == 1)
+            createNewTeacher();
+
         return teacher;
     }
 
     public Person createNewStudent() {
 
-        int choice;
-        Person student;
+        Person student = new Person(assignFirstName(), assignLastName(), assignPhone(), assignEmail(), Role.STUDENT);
+        personRepository.add(student);
 
-        do {
+        System.out.println("Congratulations! You have just created new student:\n" + student);
 
-            student = new Person(assignFirstName(), assignLastName(), assignPhone(), assignEmail(), Role.STUDENT);
-            personRepository.add(student);
-            System.out.println("Congratulations! You have just created new student:\n" + student);
-            System.out.println();
-            personRepository.getAllStudents();
-            System.out.println();
-            System.out.println("Would you like to create another student?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        personRepository.getAllStudents();
 
-        } while (choice == 1);
+        System.out.println("Would you like to create another student?");
 
-        if (choice == 0)
-            selectStudentsOption(chooseStudentsOption());
-        else {
-            System.out.println(NOTHING_FOUND);
-            selectStudentsOption(chooseStudentsOption());
-        }
+        if (repeatStudentAction() == 1)
+            createNewStudent();
+
         return student;
     }
 
     public void createNewLecture() {
 
-        int choice;
+        String lectureName;
 
         do {
-
-            String lectureName;
-
-            do {
             System.out.println("Enter lecture name (format like 'Introduction'):");
             lectureName = USER_INPUT.next();
-                checkName(lectureName);
-                if (!checkName(lectureName))
-                    System.out.println(WRONG_FORMAT);
-            } while (!checkName(lectureName));
+            checkName(lectureName);
+            if (!checkName(lectureName))
+                System.out.println(WRONG_FORMAT);
+        } while (!checkName(lectureName));
 
-            System.out.println();
-            System.out.println("Write down something into description:");
-            String description = USER_INPUT.next();
-            Lecture lecture = new Lecture(lectureName, firstCourse.getId(), description);
-            lectureRepository.add(lecture);
-            System.out.println("Congratulations! You have just created new lecture:\n" + lecture);
-            System.out.println();
-            lectureRepository.getAll();
-            System.out.println();
-            System.out.println("Would you like to create another lecture?");
-            System.out.println();
-            System.out.println(OPTION_CHOICE);
-            choice = USER_INPUT.nextInt();
+        System.out.println("Write down something into description:");
+        String description = USER_INPUT.next();
 
-        } while (choice == 1);
+        Lecture lecture = new Lecture(lectureName, firstCourse.getId(), description);
+        lectureRepository.add(lecture);
 
-        if (choice == 0) {
-            selectLecturesOption(chooseLecturesOption());
-        } else {
-            System.out.println(NOTHING_FOUND);
-            selectLecturesOption(chooseLecturesOption());
-        }
+        System.out.println("Congratulations! You have just created new lecture:\n" + lecture);
+        lectureRepository.getAll();
+
+        System.out.println("Would you like to create another lecture?");
+
+        if (repeatLectureAction() == 1)
+            createNewLecture();
+
         USER_INPUT.close();
     }
 

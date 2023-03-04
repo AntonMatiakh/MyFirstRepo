@@ -70,10 +70,6 @@ public class Person extends Model {
     }
 
     @Override
-    public String getName() {
-        return super.getName();
-    }
-    @Override
     public int getId() {
         return super.getId();
     }
